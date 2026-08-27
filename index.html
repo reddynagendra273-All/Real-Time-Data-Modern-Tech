@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Real-Time Data & Modern Tech is a futuristic AI-powered platform for real-time analytics, cloud intelligence, and modern automation."
+    />
+    <title>Real-Time Data & Modern Tech</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="topbar">
+        <a class="brand" href="#home">
+          <span class="brand-mark">R</span>
+          <span>Real-Time Data & Modern Tech</span>
+        </a>
+
+        <div class="header-actions">
+          <form class="global-search" id="global-search-form">
+            <span class="search-icon">⌕</span>
+            <input id="global-search" type="search" placeholder="Search reports, analytics, users..." />
+            <button type="button" class="search-clear" id="search-clear" aria-label="Clear search">×</button>
+          </form>
+          <div class="search-results" id="search-results" hidden></div>
+          <button class="icon-button notification-toggle" aria-label="Open notifications">
+            🔔
+            <span class="badge" id="notification-badge">3</span>
+          </button>
+          <a class="btn btn-secondary small" href="#login">Login</a>
+        </div>
+
+        <nav class="nav-links" aria-label="Primary navigation">
+          <a href="#dashboard">⌂ <span>Dashboard</span></a>
+          <a href="#analytics">◫ <span>Analytics</span></a>
+          <a href="#devices">◉ <span>Data Streams</span></a>
+          <a href="#reports">▤ <span>Reports</span></a>
+          <a href="#notifications">! <span>Notifications</span></a>
+          <a href="#admin-dashboard">♙ <span>Users & Access</span></a>
+          <a href="#command-center">⚙ <span>Operations</span></a>
+          <a href="#world-map">◎ <span>World Map</span></a>
+          <a href="#security">◆ <span>Security</span></a>
+          <a href="#settings">⚙ <span>Settings</span></a>
+          <a href="#team">♟ <span>Team</span></a>
+          <a href="#contact">✉ <span>Contact</span></a>
+        </nav>
+      </header>
+
+      <main id="home">
+        <section class="hero">
+          <div class="hero-content">
+            <p class="eyebrow">AI-Powered Intelligence Platform</p>
+            <h1>REAL-TIME DATA & MODERN TECH</h1>
+            <p class="hero-copy">
+              Empowering smart decisions through real-time analytics, cloud computing, artificial
+              intelligence, and intelligent automation.
+            </p>
+            <div class="hero-actions">
+              <a class="btn btn-primary" href="#dashboard">Explore Dashboard</a>
+              <a class="btn btn-secondary" href="#about">Learn More</a>
+              <a class="btn btn-secondary" href="#admin-dashboard">Open Admin Panel</a>
+            </div>
+            <div class="hero-metrics" aria-label="Platform highlights">
+              <div>
+                <strong>24/7</strong>
+                <span>Live Monitoring</span>
+              </div>
+              <div>
+                <strong>99.9%</strong>
+                <span>System Uptime</span>
+              </div>
+              <div>
+                <strong>1.2M+</strong>
+                <span>Data Points</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="about" class="section">
+          <div class="section-heading">
+            <p class="eyebrow">About the Platform</p>
+            <h2>Connected intelligence for a smarter world</h2>
+          </div>
+          <div class="about-grid">
+            <div class="card card-large">
+              <p>
+                Real-time data collection, cloud computing, AI, and automation work together to
+                deliver instant visibility and smarter decisions across modern infrastructure.
+              </p>
+              <p>
+                This project was developed by NAGENDRA REDDY for ANDHRA LOYOLA INSTITUTE OF ENGINEERING AND TECHNOLOGY,
+                Department of COMPUTER SCIENCE, Academic Year 2026, under the guidance of BASAV SIR.
+              </p>
+              <p>
+                From finance and healthcare to education, transportation, public services, and modern
+                enterprises, this platform turns continuous data into actionable insight.
+              </p>
+            </div>
+            <div class="card">
+              <h3>Core Application Areas</h3>
+              <ul class="tag-list">
+                <li>Smart Enterprises</li>
+                <li>Healthcare</li>
+                <li>Education</li>
+                <li>Finance</li>
+                <li>Transportation</li>
+                <li>Public Services</li>
+                <li>Modern Technology</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section id="features" class="section">
+          <div class="section-heading">
+            <p class="eyebrow">Features</p>
+            <h2>Premium capabilities built for modern operations</h2>
+          </div>
+          <div class="card-grid">
+            <article class="card feature-card">
+              <h3>Real-Time Data Monitoring</h3>
+              <p>Observe live data streams and platform health in seconds.</p>
+            </article>
+            <article class="card feature-card">
+              <h3>Live Analytics Dashboard</h3>
+              <p>Track performance with interactive and animated intelligence views.</p>
+            </article>
+            <article class="card feature-card">
+              <h3>Cloud Integration</h3>
+              <p>Seamlessly connect services, pipelines, and data platforms in the cloud.</p>
+            </article>
+            <article class="card feature-card">
+              <h3>AI-Based Insights</h3>
+              <p>Unlock predictions, anomaly detection, and smart recommendations.</p>
+            </article>
+            <article class="card feature-card">
+              <h3>Real-Time Processing</h3>
+              <p>Handle event data with low latency and instant visibility.</p>
+            </article>
+            <article class="card feature-card">
+              <h3>Smart Automation</h3>
+              <p>Automate workflows and response agents with intelligent triggers.</p>
+            </article>
+            <article class="card feature-card">
+              <h3>Predictive Analytics</h3>
+              <p>Detect issues early and improve decision quality with proactive insights.</p>
+            </article>
+            <article class="card feature-card">
+              <h3>Secure Cloud Storage</h3>
+              <p>Protect data with reliable cloud-backed storage and access control.</p>
+            </article>
+          </div>
+        </section>
+
+        <section id="dashboard" class="section modern-dashboard-section">
+          <div class="reference-dashboard">
+            <aside class="reference-sidebar">
+              <div class="reference-brand">
+                <div class="reference-logo">⌁</div>
+                <div><strong>REAL-TIME DATA</strong><span>MODERN TECH</span></div>
+              </div>
+              <div class="reference-sidebar-label">DASHBOARD</div>
+              <nav class="reference-nav" aria-label="Dashboard navigation">
+                <a class="active" href="#dashboard">▣ <span>Overview</span></a>
+                <a href="#devices">◉ <span>Real-Time Streams</span></a>
+                <a href="#analytics">▥ <span>Analytics</span></a>
+                <a href="#analytics">◫ <span>Data Comparison</span></a>
+                <a href="#reports">▤ <span>Reports</span></a>
+                <a href="#notifications">♢ <span>Alerts &amp; Notifications</span></a>
+                <a href="#security">◉ <span>System Health</span></a>
+                <a href="#admin-dashboard">♙ <span>Users &amp; Access</span></a>
+                <a href="#settings">⚙ <span>Settings</span></a>
+              </nav>
+              <div class="reference-sidebar-label extras">EXTRAS</div>
+              <nav class="reference-nav reference-nav-secondary">
+                <a href="#analytics">✣ <span>AI Insights</span></a>
+                <a href="#command-center">◴ <span>Activity Log</span></a>
+                <a href="#reports">▧ <span>Documentation</span></a>
+                <a href="#contact">? <span>Support</span></a>
+              </nav>
+              <div class="reference-system-status"><span class="status-dot"></span><div><strong>System Status</strong><small>All Systems Operational</small></div><b>⌁</b></div>
+              <div class="reference-footer">© 2026 Modern Tech Solutions<br><span>All rights reserved.</span></div>
+            </aside>
+
+            <div class="reference-main">
+              <header class="reference-topbar">
+                <button class="reference-menu" type="button" aria-label="Toggle dashboard menu">☰</button>
+                <form class="reference-search" id="reference-search-form"><span>⌕</span><input id="reference-search" type="search" placeholder="Search metrics, streams, users..." /><button type="button" id="reference-search-clear" aria-label="Clear search">×</button></form>
+                <div class="reference-top-actions">
+                  <span class="reference-live"><i></i> Live</span>
+                  <button class="reference-notification" type="button" id="reference-notification-button">♧<b id="reference-notification-count">3</b></button>
+                  <button class="reference-user" type="button"><span class="avatar">A</span><span><strong id="reference-user-name">Admin User</strong><small>Administrator</small></span><b>⌄</b></button>
+                </div>
+              </header>
+
+              <div class="reference-content">
+                <div class="reference-heading-row">
+                  <div><p class="reference-eyebrow">DASHBOARD</p><h2>Dashboard Overview</h2><p>Real-time insights and analytics from your connected data platform</p></div>
+                  <div class="reference-context"><div><span>▣</span><strong id="reference-date">Today</strong><small id="reference-day">Live monitoring</small></div><div><span>◷</span><strong id="reference-time">--:--:--</strong><small>IST</small></div><div class="reference-health"><span class="status-dot"></span><strong>Live Status</strong><small>All Systems Online</small></div></div>
+                </div>
+
+                <div class="reference-kpis">
+                  <article class="reference-kpi blue"><div class="kpi-icon">▤</div><div><span>Active Data Streams</span><strong id="modern-stream-count">24</strong><small>↑ 14.3% <em>vs last 24h</em></small></div><svg viewBox="0 0 220 55" preserveAspectRatio="none"><polyline points="0,42 18,38 35,40 52,31 68,35 84,28 100,37 116,22 132,30 148,17 164,27 182,12 200,20 220,9"/></svg></article>
+                  <article class="reference-kpi green"><div class="kpi-icon">⌁</div><div><span>Live Metrics</span><strong id="modern-live-metrics">8,547</strong><small>↑ 23.7% <em>vs last 24h</em></small></div><svg viewBox="0 0 220 55" preserveAspectRatio="none"><polyline points="0,40 18,33 35,39 52,25 68,31 84,20 100,28 116,18 132,29 148,11 164,21 182,9 200,18 220,6"/></svg></article>
+                  <article class="reference-kpi purple"><div class="kpi-icon">▣</div><div><span>Data Processed</span><strong id="modern-data-processed">2.45 TB</strong><small>↑ 17.8% <em>vs last 24h</em></small></div><svg viewBox="0 0 220 55" preserveAspectRatio="none"><polyline points="0,40 18,35 35,38 52,29 68,33 84,24 100,28 116,18 132,24 148,12 164,19 182,10 200,15 220,5"/></svg></article>
+                  <article class="reference-kpi orange"><div class="kpi-icon">☁</div><div><span>Cloud Capacity</span><strong id="modern-cloud-capacity">68%</strong><small>↑ 5.4% <em>vs last 24h</em></small></div><svg viewBox="0 0 220 55" preserveAspectRatio="none"><polyline points="0,43 18,37 35,40 52,30 68,37 84,25 100,34 116,22 132,31 148,15 164,25 182,18 200,22 220,8"/></svg></article>
+                  <article class="reference-kpi cyan"><div class="kpi-icon">✓</div><div><span>Platform Uptime</span><strong id="modern-uptime">99.98%</strong><small>↑ 0.02% <em>vs last 24h</em></small></div><svg viewBox="0 0 220 55" preserveAspectRatio="none"><polyline points="0,43 18,39 35,41 52,33 68,38 84,28 100,33 116,20 132,28 148,13 164,21 182,15 200,19 220,6"/></svg></article>
+                </div>
+
+                <div class="reference-primary-grid">
+                  <section class="reference-panel performance-panel">
+                    <div class="reference-panel-title"><div><p>OVERALL PERFORMANCE</p><h3>Live Platform Performance</h3></div><div class="reference-score"><span>Performance Score</span><strong id="modern-performance-score">78%</strong><small>↑ 8.2% vs yesterday</small></div></div>
+                    <div class="reference-performance-chart">
+                      <svg viewBox="0 0 920 280" preserveAspectRatio="none"><g class="chart-grid"><line x1="55" y1="40" x2="890" y2="40"/><line x1="55" y1="100" x2="890" y2="100"/><line x1="55" y1="160" x2="890" y2="160"/><line x1="55" y1="220" x2="890" y2="220"/></g><polygon points="55,182 90,190 125,197 160,177 195,185 230,164 265,172 300,149 335,158 370,141 405,155 440,128 475,143 510,119 545,128 580,105 615,112 650,92 685,97 720,82 755,88 790,76 825,82 860,67 890,62 890,230 55,230"/><polyline points="55,182 90,190 125,197 160,177 195,185 230,164 265,172 300,149 335,158 370,141 405,155 440,128 475,143 510,119 545,128 580,105 615,112 650,92 685,97 720,82 755,88 790,76 825,82 860,67 890,62"/><circle cx="685" cy="97" r="6"/></svg><div class="chart-x-axis"><span>00:00</span><span>04:00</span><span>08:00</span><span>12:00</span><span>16:00</span><span>20:00</span><span>24:00</span></div></div>
+                  </section>
+
+                  <aside class="reference-panel ai-panel"><div class="reference-panel-title simple"><div><p>AI INSIGHTS</p><h3>Smart recommendations</h3></div><span class="ai-mark">✣</span></div><p class="ai-subtitle">Smart recommendations based on AI analysis of your data</p><div class="insight-list"><div><span class="insight-icon green">⌁</span><div><strong>Performance is improving steadily</strong><small>Throughput is up 8.2% over last 24h</small></div></div><div><span class="insight-icon orange">△</span><div><strong>High load expected</strong><small>System load may reach 85% by 8 PM</small></div></div><div><span class="insight-icon purple">✣</span><div><strong>Optimization available</strong><small>Storage usage can be optimized by 12%</small></div></div></div></aside>
+                </div>
+
+                <section class="reference-panel advanced-panel"><div class="reference-panel-title advanced-title"><div><p>ADVANCED ANALYTICS</p><h3>Connected data performance workspace</h3></div><div class="advanced-actions"><button type="button">Filter</button><button type="button">Last 30 days⌄</button><span>Demo data • Simulated</span></div></div><div class="reference-advanced-grid"><article class="mini-chart"><h4>Data Flow Trend</h4><small>(Mbps)</small><svg viewBox="0 0 220 120"><polyline points="0,92 22,70 44,78 66,46 88,62 110,42 132,56 154,28 176,38 198,18 220,28"/></svg><strong id="modern-flow-value">182 Mbps</strong><em>↑ 8.2%</em></article><article class="mini-chart"><h4>System Load</h4><small>(%)</small><svg viewBox="0 0 220 120"><polyline points="0,75 22,66 44,72 66,52 88,61 110,36 132,50 154,30 176,48 198,27 220,38"/></svg><strong id="modern-load-value">56%</strong><em>↑ 4.7%</em></article><article class="mini-chart bars"><h4>Weekly Performance</h4><small>(%)</small><svg viewBox="0 0 220 120"><rect x="5" y="48" width="20" height="72"/><rect x="38" y="40" width="20" height="80"/><rect x="71" y="34" width="20" height="86"/><rect x="104" y="44" width="20" height="76"/><rect x="137" y="30" width="20" height="90"/><rect x="170" y="22" width="20" height="98"/><rect x="203" y="36" width="12" height="84"/></svg><strong>Avg 72%</strong><em>↑ 6.3%</em></article><article class="mini-chart"><h4>Monthly Trend</h4><small>(%)</small><svg viewBox="0 0 220 120"><polyline points="0,88 28,80 56,86 84,65 112,72 140,52 168,60 196,35 220,22"/></svg><strong>78%</strong><em>↑ 7.1%</em></article><article class="mini-chart resource-mix"><h4>Resource Mix</h4><small>(%)</small><div class="donut"></div><div class="resource-legend"><span>■ CPU <b>42%</b></span><span>■ Memory <b>28%</b></span><span>■ Storage <b>20%</b></span><span>■ Network <b>10%</b></span></div></article></div></section>
+
+                <div class="reference-secondary-grid">
+                  <section class="reference-panel activity-panel"><div class="reference-panel-title simple"><div><p>RECENT ACTIVITY</p><h3>Latest system events</h3></div><button type="button">View all</button></div><div class="reference-activity" id="reference-activity"><div><span>⌁</span><p><strong>Data stream “User Activity” updated</strong><small>2 minutes ago</small></p></div><div><span>▣</span><p><strong>New metrics received from Server-02</strong><small>5 minutes ago</small></p></div><div><span>✓</span><p><strong>Backup completed successfully</strong><small>15 minutes ago</small></p></div><div><span>△</span><p><strong>Alert rule “High CPU” triggered</strong><small>20 minutes ago</small></p></div></div></section>
+                  <section class="reference-panel streams-panel"><div class="reference-panel-title simple"><div><p>LIVE DATA STREAMS</p><h3>Connected sources</h3></div><button type="button">View all</button></div><table><thead><tr><th>Stream Name</th><th>Status</th><th>Throughput</th><th>Latency</th><th>Last Update</th></tr></thead><tbody><tr><td>User Activity Stream</td><td><span class="live-badge">LIVE</span></td><td id="modern-stream-throughput">182 Mbps</td><td id="modern-stream-latency">24 ms</td><td>17:55:10</td></tr><tr><td>System Metrics Stream</td><td><span class="live-badge">LIVE</span></td><td>98 Mbps</td><td>18 ms</td><td>17:55:09</td></tr><tr><td>Transaction Stream</td><td><span class="live-badge">LIVE</span></td><td>215 Mbps</td><td>31 ms</td><td>17:55:08</td></tr><tr><td>IoT Sensor Stream</td><td><span class="live-badge">LIVE</span></td><td>128 Mbps</td><td>22 ms</td><td>17:55:07</td></tr></tbody></table></section>
+                  <section class="reference-panel notifications-panel"><div class="reference-panel-title simple"><div><p>NOTIFICATIONS</p><h3>System alerts</h3></div><button type="button">View all</button></div><div class="reference-notifications"><div><span class="notif-red">!</span><p><strong>High memory usage detected on Server-05</strong><small>3 minutes ago</small></p></div><div><span class="notif-orange">♙</span><p><strong>New login from 192.168.1.45</strong><small>10 minutes ago</small></p></div><div><span class="notif-green">✓</span><p><strong>Data export completed</strong><small>26 minutes ago</small></p></div><div><span class="notif-blue">i</span><p><strong>System will undergo maintenance at 02:00 AM</strong><small>1 hour ago</small></p></div></div></section>
+                </div>
+
+                <section class="reference-panel quick-panel"><div class="reference-panel-title simple"><div><p>QUICK ACTIONS</p><h3>Common operations</h3></div></div><div class="quick-actions"><button class="qa-blue" type="button">▤<span>Add Data Source</span></button><button class="qa-green" type="button">▧<span>Generate Report</span></button><button class="qa-orange" type="button">♢<span>Create Alert</span></button><button class="qa-purple" type="button">▣<span>Backup Now</span></button><button class="qa-cyan" type="button">⌁<span>System Health</span></button></div></section>
+              </div>
+            </div>
+          </div>
+
+          <!-- Compatibility bindings used by the existing live-metric engine. -->
+          <div class="legacy-dashboard-bindings" aria-hidden="true">
+            <span id="metric-users">184</span><span id="metric-records">245000</span><span id="metric-uptime">99.9%</span><span id="metric-cloud">Stable</span><span id="metric-speed">4.2x</span><span id="metric-network">318 Mbps</span>
+            <span id="sensor-temperature">182 Mbps</span><span id="sensor-humidity">48 ms</span><span id="sensor-air-quality">Low</span><span id="sensor-rain">24%</span><span id="sensor-soil">98%</span><span id="sensor-light">92%</span><span id="sensor-energy">4.2x</span><span id="sensor-device-status">Stable</span>
+            <span id="weather-temp">24°C</span><span id="weather-condition">Clear</span><span id="weather-humidity">58%</span><span id="weather-wind">14 km/h</span><span id="weather-pressure">1012 hPa</span>
+            <span id="live-clock-display">Live</span><span id="last-update">Last update: --</span><span id="performance-score">78</span><span id="performance-throughput">182 Mbps</span><span id="performance-latency">48 ms</span><span id="performance-sync">98%</span><span id="performance-uptime">99.9%</span><span id="performance-last-update">Live</span><svg><polyline id="performance-line"/><path id="performance-area"/><g id="performance-points"/></svg><span id="chart-runtime-status">Charts ready</span>
+            <canvas id="line-chart"></canvas><canvas id="bar-chart"></canvas><canvas id="weekly-chart"></canvas><canvas id="monthly-chart"></canvas><canvas id="doughnut-chart"></canvas>
+            <div id="dashboard-activity"></div><div id="dashboard-notifications"></div>
+          </div>
+        </section>
+
+        <section id="devices" class="section">
+          <div class="section-heading">
+            <p class="eyebrow">Data Streams</p>
+            <h2>Modern data pipelines for every digital environment</h2>
+          </div>
+          <div class="card-grid">
+            <article class="card device-card">Real-Time Streams</article>
+            <article class="card device-card">Live Dashboards</article>
+            <article class="card device-card">Cloud Sync</article>
+            <article class="card device-card">Data Ingestion</article>
+            <article class="card device-card">Smart Alerts</article>
+            <article class="card device-card">Predictive Models</article>
+            <article class="card device-card">Automated Reports</article>
+            <article class="card device-card">User Analytics</article>
+            <article class="card device-card">Admin Controls</article>
+            <article class="card device-card">Performance Insights</article>
+            <article class="card device-card">Secure Processing</article>
+            <article class="card device-card">Modern Technology</article>
+          </div>
+        </section>
+
+        <section id="analytics" class="section">
+          <div class="section-heading">
+            <p class="eyebrow">Analytics</p>
+            <h2>Actionable intelligence from connected data</h2>
+          </div>
+          <div class="analytics-grid">
+            <div class="card stat-card">
+              <h3>Active Data Streams</h3>
+              <p>128</p>
+            </div>
+            <div class="card stat-card">
+              <h3>Live Metrics</h3>
+              <p>356</p>
+            </div>
+            <div class="card stat-card">
+              <h3>Data Processed</h3>
+              <p>1.8 TB</p>
+            </div>
+            <div class="card stat-card">
+              <h3>Cloud Capacity</h3>
+              <p>74%</p>
+            </div>
+            <div class="card stat-card">
+              <h3>Platform Uptime</h3>
+              <p>99.9%</p>
+            </div>
+            <div class="card stat-card">
+              <h3>Active Alerts</h3>
+              <p>12</p>
+            </div>
+          </div>
+
+          <div class="analytics-shell">
+            <div class="card analytics-main">
+              <div class="dashboard-topline">
+                <div>
+                  <p class="eyebrow">Advanced Analytics</p>
+                  <h3>Simulated performance workspace</h3>
+                </div>
+                <div class="toolbar-row">
+                  <label class="filter-pill">
+                    <span>Filter</span>
+                    <select id="analytics-range">
+                      <option value="7d">Last 7 days</option>
+                      <option value="30d" selected>Last 30 days</option>
+                      <option value="90d">Last 90 days</option>
+                    </select>
+                  </label>
+                  <span class="demo-badge">Demo data • Simulated</span>
+                </div>
+              </div>
+              <div class="kpi-grid">
+                <div class="mini-card">
+                  <span>Data Flow</span>
+                  <strong id="kpi-flow">182 Mbps</strong>
+                  <small class="trend up">+8.2%</small>
+                </div>
+                <div class="mini-card">
+                  <span>Processing</span>
+                  <strong id="kpi-processing">94%</strong>
+                  <small class="trend up">+4.7%</small>
+                </div>
+                <div class="mini-card">
+                  <span>Synchronization</span>
+                  <strong id="kpi-sync">98%</strong>
+                  <small class="trend up">+2.1%</small>
+                </div>
+                <div class="mini-card">
+                  <span>Alert Risk</span>
+                  <strong id="kpi-risk">Low</strong>
+                  <small class="trend down">-6.2%</small>
+                </div>
+              </div>
+              <div class="analytics-chart-grid">
+                <div class="card chart-panel">
+                  <h4>Real-time Data Flow</h4>
+                  <div class="chart-emergency" aria-hidden="true"><svg viewBox="0 0 640 220" preserveAspectRatio="none"><polyline points="20,175 120,145 220,150 320,110 420,128 520,82 620,58" fill="none"/><circle cx="620" cy="58" r="5"/></svg></div><canvas id="analytics-flow-chart"></canvas><div class="chart-fallback-note">Live flow trend: 140 → 168 → 182 → 174 → 190 → 205 Mbps</div>
+                </div>
+                <div class="card chart-panel">
+                  <h4>Daily Activity</h4>
+                  <div class="chart-emergency" aria-hidden="true"><svg viewBox="0 0 640 220" preserveAspectRatio="none"><rect x="45" y="94" width="58" height="106" rx="7"/><rect x="130" y="112" width="58" height="88" rx="7"/><rect x="215" y="72" width="58" height="128" rx="7"/><rect x="300" y="84" width="58" height="116" rx="7"/><rect x="385" y="58" width="58" height="142" rx="7"/><rect x="470" y="45" width="58" height="155" rx="7"/><rect x="555" y="30" width="58" height="170" rx="7"/></svg></div><canvas id="analytics-daily-chart"></canvas><div class="chart-fallback-note">Daily activity: 82 • 76 • 91 • 88 • 96 • 102 • 109</div>
+                </div>
+                <div class="card chart-panel">
+                  <h4>Weekly Performance</h4>
+                  <div class="chart-emergency" aria-hidden="true"><svg viewBox="0 0 640 220" preserveAspectRatio="none"><polyline points="20,160 220,130 420,92 620,52" fill="none"/><circle cx="620" cy="52" r="5"/></svg></div><canvas id="analytics-weekly-chart"></canvas><div class="chart-fallback-note">Weekly performance: 72 • 76 • 81 • 87%</div>
+                </div>
+                <div class="card chart-panel">
+                  <h4>Monthly Trend</h4>
+                  <div class="chart-emergency" aria-hidden="true"><svg viewBox="0 0 640 220" preserveAspectRatio="none"><polyline points="20,168 120,148 220,135 320,108 420,92 520,66 620,45" fill="none"/><circle cx="620" cy="45" r="5"/></svg></div><canvas id="analytics-monthly-chart"></canvas><div class="chart-fallback-note">Monthly trend: 64 • 69 • 74 • 77 • 81 • 88%</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card analytics-side">
+              <div class="dashboard-topline">
+                <div>
+                  <p class="eyebrow">AI Insights</p>
+                  <h3>Smart recommendations</h3>
+                </div>
+                <button class="btn btn-secondary small" id="refresh-insights" type="button">Refresh insights</button>
+              </div>
+              <p class="subtle">These panels use simulated demo data and are intended for frontend presentation.</p>
+              <div class="insight-list" id="ai-insights">
+                <div class="insight-item"><div><strong>Performance is improving</strong><div class="subtle">Throughput is up 8.2% over last week.</div></div><span class="confidence">Confidence 92%</span></div>
+                <div class="insight-item"><div><strong>Cloud synchronization is healthy</strong><div class="subtle">Current sync health remains above the target threshold.</div></div><span class="confidence">Confidence 94%</span></div>
+                <div class="insight-item"><div><strong>System performance is stable</strong><div class="subtle">Latency and processing remain within the expected range.</div></div><span class="confidence">Confidence 95%</span></div>
+              </div>
+              <div class="recommendations">
+                <h4>Recommendation</h4>
+                <p id="recommendation-text">Keep monitoring the throughput trend and preserve current cloud health.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="comparison-grid">
+            <div class="card">
+              <div class="dashboard-topline">
+                <div>
+                  <h3>Data Comparison</h3>
+                  <p class="subtle">Compare current performance against previous periods.</p>
+                </div>
+                <label class="filter-pill compact-filter">
+                  <span>Range</span>
+                  <select id="comparison-range">
+                    <option value="day">Today vs Yesterday</option>
+                    <option value="week" selected>This Week vs Last Week</option>
+                    <option value="month">This Month vs Previous Month</option>
+                  </select>
+                </label>
+              </div>
+              <div class="comparison-summary">
+                <div>
+                  <span>Percentage change</span>
+                  <strong id="comparison-change">+14.8%</strong>
+                </div>
+                <div>
+                  <span>Trend</span>
+                  <strong id="comparison-trend">Increase</strong>
+                </div>
+              </div>
+              <div class="comparison-chart-wrap">
+                <svg id="comparison-svg" viewBox="0 0 760 260" role="img" aria-label="Data comparison chart" preserveAspectRatio="none">
+                  <g class="comparison-grid"><line x1="60" y1="40" x2="730" y2="40"/><line x1="60" y1="95" x2="730" y2="95"/><line x1="60" y1="150" x2="730" y2="150"/><line x1="60" y1="205" x2="730" y2="205"/></g>
+                  <rect id="comparison-bar-a" x="180" y="110" width="120" height="95" rx="10"/>
+                  <rect id="comparison-bar-b" x="460" y="80" width="120" height="125" rx="10"/>
+                  <text id="comparison-label-a" x="240" y="235">Last Week</text>
+                  <text id="comparison-label-b" x="520" y="235">This Week</text>
+                </svg>
+              </div>
+              <div class="chart-fallback-note comparison-fallback">Current week is <strong>+14.8%</strong> versus the previous period.</div>
+            </div>
+            <div class="card">
+              <h3>Real-Time Activity Feed</h3>
+              <div class="activity-feed" id="activity-feed"><div class="feed-item"><span class="feed-dot"></span><div><strong>System started</strong><div class="subtle">Live activity feed is ready.</div></div></div><div class="feed-item"><span class="feed-dot"></span><div><strong>Data pipeline healthy</strong><div class="subtle">Throughput is within the expected range.</div></div></div></div>
+            </div>
+          </div>
+        </section>
+
+        <section id="admin-dashboard" class="section">
+          <div class="section-heading">
+            <p class="eyebrow">NAGENDRA REDDY Dashboard</p>
+            <h2>Professional control center for analytics and users</h2>
+            <p class="subtle" id="dashboard-welcome-message">Welcome, NAGENDRA REDDY</p>
+            <p class="subtle">Demo dashboard • simulated values update every few seconds</p>
+          </div>
+          <div class="admin-grid">
+            <div class="card" data-dashboard-card="overview">
+              <div class="dashboard-topline">
+                <div>
+                  <h3>Live Platform Metrics</h3>
+                  <p class="subtle">Real-time demo statistics for the product experience.</p>
+                </div>
+                <span class="status-pill" id="auth-status-pill">Demo</span>
+              </div>
+              <div class="analytics-grid admin-stats">
+                <div class="mini-card">
+                  <span>Active Users</span>
+                  <strong id="metric-users">184</strong>
+                </div>
+                <div class="mini-card">
+                  <span>Data Records</span>
+                  <strong id="metric-records">245K</strong>
+                </div>
+                <div class="mini-card">
+                  <span>System Uptime</span>
+                  <strong id="metric-uptime">99.9%</strong>
+                </div>
+                <div class="mini-card">
+                  <span>Cloud Status</span>
+                  <strong id="metric-cloud">Stable</strong>
+                </div>
+                <div class="mini-card">
+                  <span>Processing Speed</span>
+                  <strong id="metric-speed">4.2x</strong>
+                </div>
+                <div class="mini-card">
+                  <span>Network Activity</span>
+                  <strong id="metric-network">318 Mbps</strong>
+                </div>
+              </div>
+            </div>
+
+            <div class="card" data-dashboard-card="notifications">
+              <div class="dashboard-topline">
+                <div>
+                  <h3>Smart Notifications</h3>
+                  <p class="subtle">Category-based alerts with history and quick actions.</p>
+                </div>
+                <span class="status-pill" id="notification-counter-pill">3 new</span>
+              </div>
+              <div class="notification-toolbar">
+                <button class="pill-chip active" data-filter="all" type="button">All</button>
+                <button class="pill-chip" data-filter="Data" type="button">Data</button>
+                <button class="pill-chip" data-filter="System" type="button">System</button>
+                <button class="pill-chip" data-filter="Report" type="button">Report</button>
+              </div>
+              <ul class="activity-list" id="dashboard-notifications">
+                <li>New data processed</li>
+                <li>System status normal</li>
+                <li>Performance warning reviewed</li>
+                <li>Report generated</li>
+              </ul>
+              <div class="notification-control-row">
+                <button class="btn btn-secondary small" id="mark-all-read" type="button">Mark all read</button>
+                <button class="btn btn-secondary small" id="clear-all-notifications" type="button">Clear all</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="admin-grid lower-grid">
+            <div class="card" data-dashboard-card="activity">
+              <h3>Recent Activity</h3>
+              <ul class="activity-list" id="dashboard-activity">
+                <li>Data pipeline synced successfully</li>
+                <li>Latency spike detected in channel A</li>
+                <li>Cloud backup completed</li>
+                <li>Notification preferences updated</li>
+              </ul>
+            </div>
+            <div class="card" data-dashboard-card="processing">
+              <h3>Data Processing Status</h3>
+              <ul class="activity-list">
+                <li>Real-time pipeline running</li>
+                <li>Cloud sync healthy</li>
+                <li>Alert engine active</li>
+              </ul>
+            </div>
+            <div class="card profile-card" data-dashboard-card="profile">
+              <div class="profile-header">
+                <div class="profile-avatar">NR</div>
+                <div>
+                  <h3 id="profile-display-name">NAGENDRA REDDY</h3>
+                  <p class="subtle" id="profile-display-role">Project Administrator</p>
+                </div>
+              </div>
+              <div class="profile-meta">
+                <div><span>Email</span><strong id="profile-display-email">reddyallamnagendra@gmail.com</strong></div>
+                <div><span>Account</span><strong id="profile-display-status">Active</strong></div>
+                <div><span>Last login</span><strong id="profile-display-login">Today • 09:20</strong></div>
+              </div>
+              <div class="recent-activity-list">
+                <h4>Recent Activity</h4>
+                <p>Updated analytics report</p>
+                <p>Reviewed alert queue</p>
+                <p>Synced cloud snapshot</p>
+              </div>
+              <form class="profile-form" id="profile-form">
+                <label>
+                  Admin name
+                  <input id="profile-name-input" type="text" value="NAGENDRA REDDY" />
+                </label>
+                <label>
+                  Email
+                  <input id="profile-email-input" type="email" value="reddyallamnagendra@gmail.com" />
+                </label>
+                <label>
+                  Role
+                  <input id="profile-role-input" type="text" value="Project Administrator" />
+                </label>
+                <button class="btn btn-primary small" type="submit">Edit Profile</button>
+              </form>
+            </div>
+          </div>
+
+          <div class="admin-grid lower-grid">
+            <div class="card" data-dashboard-card="customization">
+              <h3>Dashboard Customization</h3>
+              <div class="custom-dashboard-options">
+                <label class="switch-row"><span>Show KPI cards</span><input type="checkbox" id="toggle-kpi" checked /></label>
+                <label class="switch-row"><span>Show charts</span><input type="checkbox" id="toggle-charts" checked /></label>
+                <label class="switch-row"><span>Show activity feed</span><input type="checkbox" id="toggle-feed" checked /></label>
+              </div>
+              <label class="filter-pill full-width">
+                <span>Layout</span>
+                <select id="dashboard-layout">
+                  <option value="grid">Grid</option>
+                  <option value="stack">Stack</option>
+                </select>
+              </label>
+              <div class="notification-control-row">
+                <button class="btn btn-secondary small" id="reset-dashboard" type="button">Reset layout</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="reports" class="section">
+          <div class="section-heading">
+            <p class="eyebrow">Reports</p>
+            <h2>Professional reporting for every decision cycle</h2>
+          </div>
+          <div class="card-grid">
+            <article class="card report-card">
+              <h3>Daily Report</h3>
+              <p>Key operations and alerts from the latest 24 hours.</p>
+            </article>
+            <article class="card report-card">
+              <h3>Weekly Report</h3>
+              <p>Performance trends and system efficiency summaries.</p>
+            </article>
+            <article class="card report-card">
+              <h3>Monthly Report</h3>
+              <p>Strategic review of growth, stability, and usage analytics.</p>
+            </article>
+            <article class="card report-card">
+              <h3>Analytics Summary</h3>
+              <p>Reliability and diagnostics for all live data services.</p>
+            </article>
+          </div>
+          <div class="export-actions">
+            <button class="btn btn-primary export-btn" data-report="daily" type="button">Generate Report</button>
+            <button class="btn btn-secondary export-btn" data-report="weekly" type="button">Export CSV</button>
+            <button class="btn btn-secondary export-btn" data-report="monthly" type="button">Print Report</button>
+            <button class="btn btn-secondary export-btn" data-report="summary" type="button">Download Summary</button>
+          </div>
+          <div class="report-summary" id="report-summary">Select a report action to generate a frontend demo summary.</div>
+        </section>
+
+        <section id="command-center" class="section">
+          <div class="section-heading">
+            <p class="eyebrow">REAL-TIME COMMAND CENTER</p>
+            <h2>Premium operations overview for the modern platform</h2>
+          </div>
+          <div class="command-grid">
+            <div class="card command-card">
+              <div class="command-status-row"><span>System Status</span><strong>🟢 ONLINE</strong></div>
+              <div class="command-status-row"><span>Data Processing</span><strong>🟢 ACTIVE</strong></div>
+              <div class="command-status-row"><span>Cloud Status</span><strong>🟢 CONNECTED</strong></div>
+              <div class="command-status-row"><span>Security Status</span><strong>🟢 SECURE</strong></div>
+              <div class="command-status-row"><span>Alerts</span><strong>🟡 02</strong></div>
+            </div>
+            <div class="card command-card command-metrics">
+              <div class="metric-number-card"><span>Data Processed</span><strong class="metric-number" data-target="8420" data-suffix=" TB">0</strong></div>
+              <div class="metric-number-card"><span>Active Users</span><strong class="metric-number" data-target="268" data-suffix="">0</strong></div>
+              <div class="metric-number-card"><span>System Uptime</span><strong class="metric-number" data-target="99.9" data-suffix="%">0</strong></div>
+              <div class="metric-number-card"><span>Processing Speed</span><strong class="metric-number" data-target="4.8" data-suffix="x">0</strong></div>
+              <div class="metric-number-card"><span>Today's Activity</span><strong class="metric-number" data-target="1572" data-suffix=" events">0</strong></div>
+            </div>
+          </div>
+        </section>
+
+        <section id="world-map" class="section">
+          <div class="section-heading">
+            <p class="eyebrow">World Map</p>
+            <h2>Demo live data coverage across the globe</h2>
+          </div>
+          <div class="world-map-grid">
+            <div class="card map-card">
+              <div class="map-shell">
+                <svg viewBox="0 0 800 400" class="map-svg" role="img" aria-label="Stylized world map with device markers">
+                  <rect x="0" y="0" width="800" height="400" rx="24" fill="rgba(255,255,255,0.04)"></rect>
+                  <path d="M120 120c18-32 54-55 92-58 37-3 58 13 80 31 10 10 21 24 34 31 26 14 13 43 38 59 25 16 48 9 64-2 32-23 73-13 95 7 16 14 24 34 33 50 9 16 10 32 6 47-3 11-9 25-19 28-15 5-24-10-40-14-13-3-27-1-37 8-14 11-19 26-33 37-15 12-34 18-50 12-15-6-25-19-41-23-20-5-37 4-54 18-16 14-30 31-53 34-20 3-41-7-57-21-23-18-37-46-57-67-9-10-26-15-33-27-12-20-10-45-15-68-4-18-17-33-29-44-11-11-31-14-33-30-1-8 3-18 9-25 8-10 16-18 28-23 16-7 35-7 49-16 11-7 11-17 1-25-10-8-24-8-36-9-11-1-22-1-31 6-10 8-16 20-15 32 2 18 10 33 23 45 9 8 19 14 29 20z" fill="rgba(79,195,247,0.12)" stroke="rgba(79,195,247,0.35)" stroke-width="2"></path>
+                </svg>
+                <button class="map-marker active" data-location="Bengaluru" data-info="Gateway-01 • 52 active streams • Throughput stable" style="top: 62%; left: 69%">●</button>
+                <button class="map-marker" data-location="Seattle" data-info="Gateway-02 • Network latency low • Cloud uptime strong" style="top: 24%; left: 18%">●</button>
+                <button class="map-marker" data-location="Berlin" data-info="Gateway-03 • Performance improved • 12 data channels connected" style="top: 29%; left: 50%">●</button>
+                <button class="map-marker" data-location="Toronto" data-info="Gateway-04 • Analytics trend healthy • Sync stable" style="top: 22%; left: 24%">●</button>
+              </div>
+            </div>
+            <div class="card map-info-card">
+              <h3 id="map-location">Bengaluru</h3>
+              <p id="map-info">Gateway-01 • 52 active streams • Throughput stable</p>
+              <div class="mini-stat-list">
+                <div><span>Connected</span><strong>14</strong></div>
+                <div><span>Alerts</span><strong>1</strong></div>
+                <div><span>Uptime</span><strong>99.5%</strong></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="security" class="section">
+          <div class="section-heading">
+            <p class="eyebrow">Security Dashboard</p>
+            <h2>Demo security overview for the platform</h2>
+          </div>
+          <div class="security-grid">
+            <div class="card security-card">
+              <h3>Account Status</h3>
+              <p class="security-main">🟢 Active</p>
+              <p class="subtle">Demo data • simulated security metrics.</p>
+              <div class="mini-stat-list">
+                <div><span>Last login</span><strong id="security-last-login">Today, 09:20</strong></div>
+                <div><span>Active sessions</span><strong>3</strong></div>
+                <div><span>Login attempts</span><strong>4</strong></div>
+              </div>
+            </div>
+            <div class="card security-card">
+              <h3>Protection Layer</h3>
+              <ul class="activity-list">
+                <li>Multi-factor authentication enabled</li>
+                <li>Device trust checks active</li>
+                <li>Suspicious login attempts flagged</li>
+                <li>Password status: strong</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section id="settings" class="section">
+          <div class="section-heading">
+            <p class="eyebrow">Settings</p>
+            <h2>Customize your experience</h2>
+          </div>
+          <div class="settings-grid">
+            <div class="card">
+              <h3>Theme & Preferences</h3>
+              <label class="switch-row">
+                <span>Dark / Light Mode</span>
+                <button class="switch-button" id="settings-theme-toggle" type="button">Toggle</button>
+              </label>
+              <label class="switch-row">
+                <span>Notifications</span>
+                <input type="checkbox" id="settings-notifications" checked />
+              </label>
+              <label class="switch-row">
+                <span>Auto-refresh dashboard</span>
+                <input type="checkbox" id="settings-refresh" checked />
+              </label>
+              <label>
+                Accent color
+                <select id="accent-color">
+                  <option value="#4fc3f7">Cyan</option>
+                  <option value="#8b5cf6">Violet</option>
+                  <option value="#3ddbd9">Teal</option>
+                  <option value="#38bdf8">Sky</option>
+                </select>
+              </label>
+              <div class="theme-options">
+                <label class="switch-row"><span>Compact dashboard</span><input type="checkbox" id="compact-dashboard-toggle" /></label>
+                <label class="switch-row"><span>Comfortable dashboard</span><input type="checkbox" id="comfortable-dashboard-toggle" checked /></label>
+              </div>
+            </div>
+            <div class="card">
+              <h3>Admin Profile</h3>
+              <p class="subtle">Name: <span id="settings-profile-name">NAGENDRA REDDY</span></p>
+              <p class="subtle">Email: <span id="settings-profile-email">reddyallamnagendra@gmail.com</span></p>
+              <p class="subtle">Role: <span id="settings-profile-role">Project Administrator</span></p>
+              <p class="subtle">Project: Real-Time Data & Modern Tech</p>
+              <p class="subtle">College: ANDHRA LOYOLA INSTITUTE OF ENGINEERING AND TECHNOLOGY</p>
+              <p class="subtle">Department: COMPUTER SCIENCE</p>
+              <label>
+                Language
+                <select>
+                  <option>English</option>
+                  <option>Hindi</option>
+                  <option>Spanish</option>
+                </select>
+              </label>
+              <label>
+                Dashboard View
+                <select>
+                  <option>Compact</option>
+                  <option selected>Detailed</option>
+                </select>
+              </label>
+            </div>
+          </div>
+        </section>
+
+        <section id="team" class="section">
+          <div class="section-heading">
+            <p class="eyebrow">Team</p>
+            <h2>Built by ambitious students and innovators</h2>
+          </div>
+          <div class="card-grid">
+            <article class="card team-card" data-team-id="guide">
+              <h3>Project Guide</h3>
+              <p>BASAV SIR</p>
+            </article>
+            <article class="card team-card" data-team-id="admin">
+              <h3>NAGENDRA REDDY</h3>
+              <p>Project Administrator</p>
+            </article>
+            <article class="card team-card" data-team-id="frontend">
+              <h3>JITHENDRA</h3>
+              <p>Frontend Developer</p>
+            </article>
+            <article class="card team-card" data-team-id="platform">
+              <h3>SAIKUMAR</h3>
+              <p>Backend/Platform Developer</p>
+            </article>
+            <article class="card team-card" data-team-id="analytics">
+              <h3>RAYHAN</h3>
+              <p>Data & Analytics Developer</p>
+            </article>
+          </div>
+          <form class="card team-editor" id="team-form">
+            <div class="dashboard-topline">
+              <div>
+                <h3>Team Editor</h3>
+                <p class="subtle">Update team names and responsibilities for this browser demo.</p>
+              </div>
+              <button class="btn btn-secondary small" id="reset-team" type="button">Reset team</button>
+            </div>
+            <label>
+              Team member
+              <select id="team-member-select">
+                <option value="guide">Project Guide</option>
+                <option value="admin">Project Administrator</option>
+                <option value="frontend">Frontend Developer</option>
+                <option value="platform">Backend/Platform Developer</option>
+                <option value="analytics">Data &amp; Analytics Developer</option>
+              </select>
+            </label>
+            <label>
+              Name
+              <input id="team-name-input" type="text" required />
+            </label>
+            <label>
+              Role
+              <input id="team-role-input" type="text" required />
+            </label>
+            <button class="btn btn-primary small" type="submit">Save Team Member</button>
+          </form>
+        </section>
+
+        <section id="contact" class="section">
+          <div class="section-heading">
+            <p class="eyebrow">Contact</p>
+            <h2>Connect with our team</h2>
+          </div>
+          <div class="contact-grid">
+            <div class="card">
+              <h3>Get in Touch</h3>
+              <p>Email: hello@realtimedata.tech</p>
+              <p>Phone: +91 98765 43210</p>
+              <p>Location: Bengaluru, India</p>
+            </div>
+            <form class="card contact-form">
+              <label>
+                Name
+                <input type="text" placeholder="Your name" />
+              </label>
+              <label>
+                Email
+                <input type="email" placeholder="Your email" />
+              </label>
+              <label>
+                Subject
+                <input type="text" placeholder="Project inquiry" />
+              </label>
+              <label>
+                Message
+                <textarea rows="4" placeholder="Tell us about your idea"></textarea>
+              </label>
+              <button class="btn btn-primary" type="submit">Send Message</button>
+            </form>
+          </div>
+        </section>
+      </main>
+
+      <div class="modal-backdrop" id="login">
+        <div class="card login-card">
+          <button class="modal-close" type="button" aria-label="Close login panel">×</button>
+          <p class="eyebrow">Frontend Demo Login</p>
+          <h3>Secure Demo Access for NAGENDRA REDDY</h3>
+          <form id="login-form" novalidate>
+            <label>
+              Email or Username
+              <input id="login-identity" type="text" placeholder="reddyallamnagendra@gmail.com" required />
+            </label>
+            <label>
+              Password
+              <div class="password-wrap">
+                <input id="login-password" type="password" placeholder="Enter password" required />
+                <button class="password-toggle" type="button">Show</button>
+              </div>
+            </label>
+            <div class="login-options">
+              <label class="check-row"><input type="checkbox" checked /> Remember me</label>
+              <a href="#">Forgot password?</a>
+            </div>
+            <button class="btn btn-primary login-submit" type="submit">Sign In</button>
+            <p class="form-note"><strong>Demo login:</strong> admin / admin123 &nbsp; or &nbsp; viewer / viewer123</p>
+            <p class="form-note">Accounts are saved only in this browser for the frontend demonstration.</p>
+            <p class="switch-link">Need an account? <a href="#register" id="open-register">Register now</a></p>
+          </form>
+          <div class="login-status" id="login-status"></div>
+        </div>
+      </div>
+
+      <div class="modal-backdrop" id="register-modal" aria-hidden="true">
+        <div class="card login-card">
+          <button class="modal-close" id="register-close" type="button" aria-label="Close registration panel">×</button>
+          <p class="eyebrow">Create Demo Account</p>
+          <h3>Register for Real-Time Data &amp; Modern Tech</h3>
+          <p class="subtle">Demo accounts are ready above. New registrations receive Viewer access in this frontend-only build.</p>
+          <form id="register-form" novalidate>
+            <label>Full name<input id="register-name" type="text" placeholder="Your name" required /></label>
+            <label>Email<input id="register-email" type="email" placeholder="name@example.com" required /></label>
+            <label>Username<input id="register-username" type="text" placeholder="Choose a username" required /></label>
+            <label>Password<input id="register-password" type="password" placeholder="At least 4 characters" required /></label>
+            <label>Confirm password<input id="register-confirm-password" type="password" placeholder="Enter password again" required /></label>
+            <button class="btn btn-primary login-submit" type="submit">Create Account</button>
+            <p class="login-status" id="register-status"></p>
+            <p class="switch-link">Already registered? <a href="#login" id="open-login">Back to login</a></p>
+          </form>
+        </div>
+      </div>
+
+      <div class="notification-panel" id="notification-panel" aria-label="Notification center">
+        <div class="notification-panel-header">
+          <div>
+            <h3>Notifications</h3>
+            <p class="subtle">Smart updates and history</p>
+          </div>
+          <button class="panel-close" type="button">×</button>
+        </div>
+        <div class="notification-history" id="notification-history"><div class="history-item"><strong>Today</strong> • Monitoring started successfully.</div><div class="history-item"><strong>Today</strong> • Live metrics are available.</div></div>
+        <div class="notification-list" id="notification-list"><div class="history-item">System monitoring is active.</div><div class="history-item">No critical alerts at startup.</div></div>
+      </div>
+
+      <footer class="footer">
+        <div>
+          <h3>Real-Time Data & Modern Tech</h3>
+          <p>Copyright © 2026. All rights reserved.</p>
+          <p>Managed by NAGENDRA REDDY</p>
+          <p>Email: reddyallamnagendra@gmail.com</p>
+          <p>Role: Project Administrator</p>
+        </div>
+        <div class="footer-links">
+          <a href="#about">About</a>
+          <a href="#features">Features</a>
+          <a href="#contact">Contact</a>
+        </div>
+      </footer>
+    </div>
+
+    <script src="script.js?v=login-fix-1"></script>
+    <script>
+      // Independent visual safety net: if the main application script stops before chart rendering,
+      // the user still gets visible graphs instead of blank panels.
+      (function () {
+        const markReady = () => {
+          document.querySelectorAll('.chart-emergency').forEach((el) => {
+            const canvas = el.parentElement?.querySelector('canvas');
+            if (canvas && canvas.width > 0 && canvas.height > 0) el.classList.add('chart-emergency-hidden');
+          });
+          const status = document.getElementById('chart-runtime-status');
+          if (status) status.textContent = 'Charts ready • live updates enabled';
+        };
+        window.addEventListener('load', () => {
+          window.setTimeout(markReady, 250);
+          window.setTimeout(markReady, 1200);
+        });
+        window.setTimeout(markReady, 1800);
+      })();
+    </script>
+  </body>
+</html>

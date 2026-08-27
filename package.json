@@ -1,0 +1,8 @@
+{
+  "name": "realtime-data-modern-tech",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Real-Time Data & Modern Tech full-stack project",
+  "main": "server.js",
+  "scripts": {"start": "node server.js", "dev": "node server.js"}
+}
