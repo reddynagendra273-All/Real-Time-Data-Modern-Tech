@@ -14,6 +14,10 @@
       href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    />
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
@@ -46,7 +50,7 @@
           <a href="#notifications">! <span>Notifications</span></a>
           <a href="#admin-dashboard">♙ <span>Users & Access</span></a>
           <a href="#command-center">⚙ <span>Operations</span></a>
-          <a href="#world-map">◎ <span>World Map</span></a>
+          <a href="#world-map">🌍 <span>Live Map</span></a>
           <a href="#security">◆ <span>Security</span></a>
           <a href="#settings">⚙ <span>Settings</span></a>
           <a href="#team">♟ <span>Team</span></a>
@@ -241,7 +245,7 @@
 
           <!-- Compatibility bindings used by the existing live-metric engine. -->
           <div class="legacy-dashboard-bindings" aria-hidden="true">
-            <span id="metric-users">184</span><span id="metric-records">245000</span><span id="metric-uptime">99.9%</span><span id="metric-cloud">Stable</span><span id="metric-speed">4.2x</span><span id="metric-network">318 Mbps</span>
+            <span id="legacy-metric-users">184</span><span id="legacy-metric-records">245000</span><span id="legacy-metric-uptime">99.9%</span><span id="legacy-metric-cloud">Stable</span><span id="legacy-metric-speed">4.2x</span><span id="legacy-metric-network">318 Mbps</span>
             <span id="sensor-temperature">182 Mbps</span><span id="sensor-humidity">48 ms</span><span id="sensor-air-quality">Low</span><span id="sensor-rain">24%</span><span id="sensor-soil">98%</span><span id="sensor-light">92%</span><span id="sensor-energy">4.2x</span><span id="sensor-device-status">Stable</span>
             <span id="weather-temp">24°C</span><span id="weather-condition">Clear</span><span id="weather-humidity">58%</span><span id="weather-wind">14 km/h</span><span id="weather-pressure">1012 hPa</span>
             <span id="live-clock-display">Live</span><span id="last-update">Last update: --</span><span id="performance-score">78</span><span id="performance-throughput">182 Mbps</span><span id="performance-latency">48 ms</span><span id="performance-sync">98%</span><span id="performance-uptime">99.9%</span><span id="performance-last-update">Live</span><svg><polyline id="performance-line"/><path id="performance-area"/><g id="performance-points"/></svg><span id="chart-runtime-status">Charts ready</span>
@@ -634,30 +638,32 @@
 
         <section id="world-map" class="section">
           <div class="section-heading">
-            <p class="eyebrow">World Map</p>
-            <h2>Demo live data coverage across the globe</h2>
+            <p class="eyebrow">Live Map</p>
+            <h2>Live Data Map</h2>
+            <p class="subtle">Real-time geographical visualization of project data</p>
           </div>
           <div class="world-map-grid">
             <div class="card map-card">
-              <div class="map-shell">
-                <svg viewBox="0 0 800 400" class="map-svg" role="img" aria-label="Stylized world map with device markers">
-                  <rect x="0" y="0" width="800" height="400" rx="24" fill="rgba(255,255,255,0.04)"></rect>
-                  <path d="M120 120c18-32 54-55 92-58 37-3 58 13 80 31 10 10 21 24 34 31 26 14 13 43 38 59 25 16 48 9 64-2 32-23 73-13 95 7 16 14 24 34 33 50 9 16 10 32 6 47-3 11-9 25-19 28-15 5-24-10-40-14-13-3-27-1-37 8-14 11-19 26-33 37-15 12-34 18-50 12-15-6-25-19-41-23-20-5-37 4-54 18-16 14-30 31-53 34-20 3-41-7-57-21-23-18-37-46-57-67-9-10-26-15-33-27-12-20-10-45-15-68-4-18-17-33-29-44-11-11-31-14-33-30-1-8 3-18 9-25 8-10 16-18 28-23 16-7 35-7 49-16 11-7 11-17 1-25-10-8-24-8-36-9-11-1-22-1-31 6-10 8-16 20-15 32 2 18 10 33 23 45 9 8 19 14 29 20z" fill="rgba(79,195,247,0.12)" stroke="rgba(79,195,247,0.35)" stroke-width="2"></path>
-                </svg>
-                <button class="map-marker active" data-location="Bengaluru" data-info="Gateway-01 • 52 active streams • Throughput stable" style="top: 62%; left: 69%">●</button>
-                <button class="map-marker" data-location="Seattle" data-info="Gateway-02 • Network latency low • Cloud uptime strong" style="top: 24%; left: 18%">●</button>
-                <button class="map-marker" data-location="Berlin" data-info="Gateway-03 • Performance improved • 12 data channels connected" style="top: 29%; left: 50%">●</button>
-                <button class="map-marker" data-location="Toronto" data-info="Gateway-04 • Analytics trend healthy • Sync stable" style="top: 22%; left: 24%">●</button>
-              </div>
+              <form class="map-search" id="map-search-form" role="search">
+                <label class="sr-only" for="map-search-input">Search city, country or location</label>
+                <span aria-hidden="true">⌕</span>
+                <input id="map-search-input" type="search" placeholder="Search city, country or location..." autocomplete="off" />
+                <button class="btn btn-primary small" id="map-search-button" type="submit">Search</button>
+                <button class="map-search-clear" id="map-search-clear" type="button" aria-label="Clear map search" title="Clear search">×</button>
+              </form>
+              <p id="map-search-status" class="map-search-status" role="status" aria-live="polite"></p>
+              <div id="live-map" class="map-shell" role="application" aria-label="Interactive live data map"></div>
+              <p class="map-demo-note">Sample locations • simulated project data • OpenStreetMap</p>
             </div>
             <div class="card map-info-card">
               <h3 id="map-location">Bengaluru</h3>
-              <p id="map-info">Gateway-01 • 52 active streams • Throughput stable</p>
+              <p id="map-info">Sample project location • metrics derived from the current demo platform state.</p>
               <div class="mini-stat-list">
-                <div><span>Connected</span><strong>14</strong></div>
-                <div><span>Alerts</span><strong>1</strong></div>
-                <div><span>Uptime</span><strong>99.5%</strong></div>
+                <div><span>Data Streams</span><strong id="map-streams">12</strong></div>
+                <div><span>Status</span><strong id="map-status">Active</strong></div>
+                <div><span>Performance</span><strong id="map-performance">94%</strong></div>
               </div>
+              <p id="map-updated" class="subtle map-updated">Demo metrics update with the existing real-time stream.</p>
             </div>
           </div>
         </section>
@@ -920,7 +926,8 @@
       </footer>
     </div>
 
-    <script src="script.js?v=login-fix-1"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="script.js?v=chatbot-dashboard-fix-1"></script>
     <script>
       // Independent visual safety net: if the main application script stops before chart rendering,
       // the user still gets visible graphs instead of blank panels.

@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', () => {
+﻿document.addEventListener('DOMContentLoaded', () => {
   const body = document.body;
   const topbar = document.querySelector('.topbar');
   const nav = document.querySelector('.nav-links');
@@ -13,14 +13,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const menuToggle = document.createElement('button');
   menuToggle.className = 'menu-toggle';
-  menuToggle.innerHTML = '☰';
+  menuToggle.innerHTML = 'â˜°';
   menuToggle.setAttribute('aria-label', 'Toggle navigation');
   nav.insertAdjacentElement('beforebegin', menuToggle);
 
   const themeToggle = document.createElement('button');
   themeToggle.className = 'theme-toggle';
   themeToggle.setAttribute('aria-label', 'Toggle dark mode');
-  themeToggle.innerHTML = '☀︎';
+  themeToggle.innerHTML = 'â˜€ï¸Ž';
   topbar.appendChild(themeToggle);
 
   // Lightweight startup overlay: the dashboard is always allowed to render.
@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const backToTop = document.createElement('button');
   backToTop.className = 'back-to-top';
-  backToTop.innerHTML = '↑';
+  backToTop.innerHTML = 'â†‘';
   backToTop.setAttribute('aria-label', 'Back to top');
   body.appendChild(backToTop);
 
@@ -63,7 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const chatbotToggle = document.createElement('button');
   chatbotToggle.className = 'chatbot-toggle';
-  chatbotToggle.innerHTML = '🤖';
+  chatbotToggle.innerHTML = 'ðŸ¤–';
   chatbotToggle.setAttribute('aria-label', 'Open AI assistant');
   body.appendChild(chatbotToggle);
 
@@ -71,8 +71,14 @@ document.addEventListener('DOMContentLoaded', () => {
   chatbotPanel.className = 'chatbot-panel';
   chatbotPanel.innerHTML = `
     <div class="chatbot-header">
-      <strong>Demo AI Assistant</strong>
-      <button class="chatbot-close">×</button>
+      <div class="chatbot-title-group">
+        <span class="chatbot-avatar" aria-hidden="true">✦</span>
+        <div><strong>Gemini AI Assistant</strong><small>Real-Time Data &amp; Modern Tech</small></div>
+      </div>
+      <div class="chatbot-header-actions">
+        <button class="chatbot-maximize" type="button" aria-label="Maximize AI assistant" title="Maximize AI assistant">⛶</button>
+        <button class="chatbot-close" type="button" aria-label="Close AI assistant" title="Close AI assistant">Ã—</button>
+      </div>
     </div>
     <div class="chatbot-messages"></div>
     <div class="chatbot-quick-actions">
@@ -143,6 +149,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const mapMarkers = document.querySelectorAll('.map-marker');
   const mapLocation = document.getElementById('map-location');
   const mapInfo = document.getElementById('map-info');
+  const mapStreams = document.getElementById('map-streams');
+  const mapStatus = document.getElementById('map-status');
+  const mapPerformance = document.getElementById('map-performance');
+  const mapUpdated = document.getElementById('map-updated');
   const settingsThemeToggle = document.getElementById('settings-theme-toggle');
   const adminDashboard = document.getElementById('admin-dashboard');
   const dashboardWelcome = document.getElementById('dashboard-welcome-message');
@@ -224,7 +234,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const applyTheme = (theme) => {
     body.classList.toggle('light', theme === 'light');
-    themeToggle.innerHTML = theme === 'light' ? '🌙' : '☀︎';
+    themeToggle.innerHTML = theme === 'light' ? 'ðŸŒ™' : 'â˜€ï¸Ž';
     settingsThemeToggle && (settingsThemeToggle.textContent = theme === 'light' ? 'Switch to Dark' : 'Switch to Light');
     localStorage.setItem('rtd-theme', theme);
   };
@@ -256,12 +266,21 @@ document.addEventListener('DOMContentLoaded', () => {
     if (updateHash && window.location.hash !== `#${targetId}`) {
       history.replaceState(null, '', `#${targetId}`);
     }
+    if (targetId === 'analytics' && typeof window.updateCharts === 'function') {
+      window.requestAnimationFrame(() => {
+        window.updateCharts();
+        window.refreshAnalyticsCounters?.();
+      });
+    }
+    if (targetId === 'world-map' && typeof window.refreshLiveMap === 'function') {
+      window.requestAnimationFrame(() => window.refreshLiveMap());
+    }
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const syncFeatureView = () => {
     if (!isLoggedIn) {
-      featureItems.forEach((item) => { item.hidden = false; item.classList.remove('feature-active'); });
+      featureItems.forEach((item) => { item.hidden = !item.classList.contains('hero'); item.classList.remove('feature-active'); });
       document.body.classList.remove('feature-mode');
       return;
     }
@@ -452,7 +471,10 @@ document.addEventListener('DOMContentLoaded', () => {
     counter.dataset.suffix = suffix;
   });
 
+  let counterTimers = [];
   const animateCounters = () => {
+    counterTimers.forEach((timer) => clearInterval(timer));
+    counterTimers = [];
     counters.forEach((counter) => {
       const target = parseFloat(counter.dataset.target || '0');
       const suffix = counter.dataset.suffix || '';
@@ -470,8 +492,10 @@ document.addEventListener('DOMContentLoaded', () => {
           counter.textContent = `${current.toFixed(target % 1 === 0 ? 0 : 1)}${suffix}`;
         }
       }, stepTime);
+      counterTimers.push(timer);
     });
   };
+  window.refreshAnalyticsCounters = animateCounters;
 
   const counterObserver = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
@@ -484,6 +508,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const analyticsSection = document.querySelector('#analytics');
   if (analyticsSection) counterObserver.observe(analyticsSection);
+  if (analyticsSection && !analyticsSection.hidden) animateCounters();
 
   const liveClockDisplay = document.getElementById('live-clock-display');
   const lastUpdateLabel = document.getElementById('last-update');
@@ -506,6 +531,7 @@ document.addEventListener('DOMContentLoaded', () => {
     weatherPressure: 1012,
     weatherCondition: 'Clear'
   };
+  let renderStreams = null;
 
   const updateClock = () => {
     const now = new Date();
@@ -539,7 +565,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     const modernActivity = document.getElementById('reference-activity');
     if (modernActivity) {
-      const icons = ['⌁', '▣', '✓', '△'];
+      const icons = ['âŒ', 'â–£', 'âœ“', 'â–³'];
       modernActivity.innerHTML = activityItems.slice(0, 4).map((item, index) => `<div><span>${icons[index]}</span><p><strong>${item}</strong><small>${index === 0 ? 'Just now' : `${(index + 1) * 3} minutes ago`}</small></p></div>`).join('');
     }
   };
@@ -579,7 +605,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('sensor-energy').textContent = `${dashboardState.speed.toFixed(1)}x`;
     document.getElementById('sensor-device-status').textContent = dashboardState.cloud;
 
-    document.getElementById('weather-temp').textContent = `${dashboardState.weatherTemp}°C`;
+    document.getElementById('weather-temp').textContent = `${dashboardState.weatherTemp}Â°C`;
     document.getElementById('weather-condition').textContent = dashboardState.weatherCondition;
     document.getElementById('weather-humidity').textContent = `${dashboardState.weatherHumidity}%`;
     document.getElementById('weather-wind').textContent = `${dashboardState.weatherWind} km/h`;
@@ -592,7 +618,12 @@ document.addEventListener('DOMContentLoaded', () => {
       if (el) el.textContent = value;
     };
     const score = Math.max(72, Math.min(99, Math.round(100 - dashboardState.latency * 0.18 + dashboardState.sync * 0.08)));
-    setModern('modern-stream-count', Math.round(dashboardState.users / 7.7));
+    let localSourceCount = 0;
+    try {
+      const savedSources = JSON.parse(localStorage.getItem('rtd-data-sources'));
+      localSourceCount = Array.isArray(savedSources) ? savedSources.length : 0;
+    } catch {}
+    setModern('modern-stream-count', Math.max(1, Math.round(dashboardState.users / 7.7) + localSourceCount));
     setModern('modern-live-metrics', Math.round(dashboardState.records / 28.7).toLocaleString());
     setModern('modern-data-processed', `${(dashboardState.records / 100000).toFixed(2)} TB`);
     setModern('modern-cloud-capacity', `${Math.max(55, Math.min(92, Math.round(62 + dashboardState.processing * 0.25)))}%`);
@@ -602,6 +633,7 @@ document.addEventListener('DOMContentLoaded', () => {
     setModern('modern-load-value', `${Math.round(dashboardState.processing * 2.1)}%`);
     setModern('modern-stream-throughput', `${dashboardState.throughput} Mbps`);
     setModern('modern-stream-latency', `${dashboardState.latency} ms`);
+    if (renderStreams) renderStreams();
     const modernTime = document.getElementById('reference-time');
     const modernDate = document.getElementById('reference-date');
     const modernDay = document.getElementById('reference-day');
@@ -686,7 +718,7 @@ document.addEventListener('DOMContentLoaded', () => {
       notificationCounterPill.textContent = `${unreadCount} new`;
     }
     if (notificationHistory) {
-      notificationHistory.innerHTML = notifications.slice(0, 3).map((item) => `<div class="history-item">${item.title} • ${item.category}</div>`).join('');
+      notificationHistory.innerHTML = notifications.slice(0, 3).map((item) => `<div class="history-item">${item.title} â€¢ ${item.category}</div>`).join('');
     }
     saveNotifications();
   };
@@ -835,7 +867,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (!/^[a-z0-9._-]{3,20}$/.test(username)) {
-      setRegisterError('Username must be 3–20 characters and use letters, numbers, dot, underscore, or hyphen.');
+      setRegisterError('Username must be 3â€“20 characters and use letters, numbers, dot, underscore, or hyphen.');
       return;
     }
 
@@ -913,16 +945,16 @@ document.addEventListener('DOMContentLoaded', () => {
   const adminDashboardSection = document.getElementById('admin-dashboard');
 
   const viewerFeatures = [
-    ['✓', 'Live Dashboard', 'Available'],
-    ['✓', 'Analytics', 'Available'],
-    ['✓', 'Reports', 'Available'],
-    ['✓', 'Data Streams', 'Available'],
-    ['✓', 'Notifications', 'Available'],
-    ['✓', 'Personal Profile', 'Available'],
-    ['🔒', 'User Management', 'Admin only'],
-    ['🔒', 'Data Stream Editor', 'Admin only'],
-    ['🔒', 'Alert Rule Management', 'Admin only'],
-    ['🔒', 'Demo Data Import', 'Admin only']
+    ['âœ“', 'Live Dashboard', 'Available'],
+    ['âœ“', 'Analytics', 'Available'],
+    ['âœ“', 'Reports', 'Available'],
+    ['âœ“', 'Data Streams', 'Available'],
+    ['âœ“', 'Notifications', 'Available'],
+    ['âœ“', 'Personal Profile', 'Available'],
+    ['ðŸ”’', 'User Management', 'Admin only'],
+    ['ðŸ”’', 'Data Stream Editor', 'Admin only'],
+    ['ðŸ”’', 'Alert Rule Management', 'Admin only'],
+    ['ðŸ”’', 'Demo Data Import', 'Admin only']
   ];
 
   const renderRoleDashboard = () => {
@@ -995,47 +1027,85 @@ document.addEventListener('DOMContentLoaded', () => {
     container.scrollTop = container.scrollHeight;
   };
 
-  const getBotReply = (input) => {
-    const value = input.toLowerCase();
-    if (value.includes('project')) return 'This is a demo AI assistant for the Real-Time Data & Modern Tech project.';
-    if (value.includes('dashboard')) return 'The dashboard shows live metrics, health status, and active users in one place.';
-    if (value.includes('analytics')) return 'The analytics view highlights activity, performance, and reporting trends.';
-    if (value.includes('report')) return 'Daily, weekly, and monthly reports are available for export as CSV files.';
-    if (value.includes('status')) return 'The platform is running in demo mode with simulated, real-time updates.';
-    return 'I am a demo assistant. I can explain the dashboard, analytics, reports, and system status.';
-  };
+  const getBotReply = async (input) => {
+  const message = String(input || '').trim();
 
-  chatbotToggle.addEventListener('click', () => {
-    chatbotPanel.classList.toggle('open');
-  });
+  if (!message) {
+    return 'Please enter a question about the project.';
+  }
 
-  chatbotPanel.querySelector('.chatbot-close').addEventListener('click', () => {
-    chatbotPanel.classList.remove('open');
-  });
-
-  chatbotPanel.querySelectorAll('[data-action]').forEach((button) => {
-    button.addEventListener('click', () => {
-      const query = button.getAttribute('data-action');
-      addChatMessage(query, 'user');
-      addChatMessage(getBotReply(query), 'bot');
+  try {
+    const response = await apiFetch('/api/ai/chat', {
+      method: 'POST',
+      body: JSON.stringify({ message })
     });
-  });
 
-  const sendButton = chatbotPanel.querySelector('.chatbot-send');
-  const chatInput = chatbotPanel.querySelector('.chatbot-input-row input');
-  const sendChat = () => {
-    const value = chatInput.value.trim();
-    if (!value) return;
-    addChatMessage(value, 'user');
-    addChatMessage(getBotReply(value), 'bot');
-    chatInput.value = '';
-  };
+    return response.reply || 'I could not generate a response.';
+  } catch {
+    console.error('Gemini chatbot request failed.');
+    return 'Gemini AI is unavailable right now. Please check the server and API key.';
+  }
+};
 
-  sendButton.addEventListener('click', sendChat);
-  chatInput.addEventListener('keydown', (event) => {
-    if (event.key === 'Enter') sendChat();
+chatbotToggle.addEventListener('click', () => {
+  chatbotPanel.classList.toggle('open');
+});
+
+const chatbotMaximize = chatbotPanel.querySelector('.chatbot-maximize');
+const setChatbotMaximized = (maximized) => {
+  chatbotPanel.classList.toggle('maximized', maximized);
+  chatbotMaximize.textContent = maximized ? '↙' : '⛶';
+  chatbotMaximize.setAttribute('aria-label', maximized ? 'Restore AI assistant' : 'Maximize AI assistant');
+  chatbotMaximize.setAttribute('title', maximized ? 'Restore AI assistant' : 'Maximize AI assistant');
+};
+
+chatbotMaximize.addEventListener('click', () => {
+  setChatbotMaximized(!chatbotPanel.classList.contains('maximized'));
+});
+
+chatbotPanel.querySelector('.chatbot-close').addEventListener('click', () => {
+  setChatbotMaximized(false);
+  chatbotPanel.classList.remove('open');
+});
+
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape' && chatbotPanel.classList.contains('maximized')) setChatbotMaximized(false);
+});
+
+chatbotPanel.querySelectorAll('[data-action]').forEach((button) => {
+  button.addEventListener('click', async () => {
+    const query = button.getAttribute('data-action');
+    addChatMessage(query, 'user');
+
+    const reply = await getBotReply(query);
+    addChatMessage(reply, 'bot');
   });
-  addChatMessage('Hello! I am a demo assistant for this project. I can explain analytics, reports, and system status.', 'bot');
+});
+
+const sendButton = chatbotPanel.querySelector('.chatbot-send');
+const chatInput = chatbotPanel.querySelector('.chatbot-input-row input');
+
+const sendChat = async () => {
+  const value = chatInput.value.trim();
+  if (!value) return;
+
+  addChatMessage(value, 'user');
+  chatInput.value = '';
+
+  const reply = await getBotReply(value);
+  addChatMessage(reply, 'bot');
+};
+
+sendButton.addEventListener('click', sendChat);
+
+chatInput.addEventListener('keydown', (event) => {
+  if (event.key === 'Enter') sendChat();
+});
+
+addChatMessage(
+  'Hello! 👋 I am the AI assistant for Real-Time Data & Modern Tech. Ask me anything about your project, including its features, technologies, architecture, dashboard, analytics, login, Admin/Viewer roles, real-time data, and more.',
+  'bot'
+);
 
   // Keep the server-rendered Overall Performance markup intact.
   const chartCard = document.querySelector('.chart-card');
@@ -1159,10 +1229,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const activityFeed = document.getElementById('activity-feed');
   const feedEvents = [
-    { icon: '🟢', title: '10:32:15', detail: 'New data received' },
-    { icon: '🟣', title: '10:32:21', detail: 'Analytics updated' },
-    { icon: '🔵', title: '10:32:28', detail: 'Report generated' },
-    { icon: '🟡', title: '10:32:35', detail: 'Cloud synchronization completed' }
+    { icon: 'ðŸŸ¢', title: '10:32:15', detail: 'New data received' },
+    { icon: 'ðŸŸ£', title: '10:32:21', detail: 'Analytics updated' },
+    { icon: 'ðŸ”µ', title: '10:32:28', detail: 'Report generated' },
+    { icon: 'ðŸŸ¡', title: '10:32:35', detail: 'Cloud synchronization completed' }
   ];
 
   const renderFeed = () => {
@@ -1181,10 +1251,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   setInterval(() => {
     const nextEvent = [
-      { icon: '🟢', title: new Date().toLocaleTimeString(), detail: 'New data received' },
-      { icon: '🟣', title: new Date().toLocaleTimeString(), detail: 'Analytics updated' },
-      { icon: '🔵', title: new Date().toLocaleTimeString(), detail: 'Report generated' },
-      { icon: '🟡', title: new Date().toLocaleTimeString(), detail: 'Cloud synchronization completed' }
+      { icon: 'ðŸŸ¢', title: new Date().toLocaleTimeString(), detail: 'New data received' },
+      { icon: 'ðŸŸ£', title: new Date().toLocaleTimeString(), detail: 'Analytics updated' },
+      { icon: 'ðŸ”µ', title: new Date().toLocaleTimeString(), detail: 'Report generated' },
+      { icon: 'ðŸŸ¡', title: new Date().toLocaleTimeString(), detail: 'Cloud synchronization completed' }
     ][Math.floor(Math.random() * 4)];
     feedEvents.unshift(nextEvent);
     feedEvents.pop();
@@ -1515,16 +1585,64 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const streamSection = document.getElementById('devices');
   const streamGrid = streamSection?.querySelector('.card-grid');
+  streamGrid?.insertAdjacentHTML('afterend', `<div class="card data-source-panel"><div class="dashboard-topline"><div><h3>Data Integration</h3><p class="subtle">Local demo sources connected to this browser.</p></div><span class="status-pill" id="data-source-count">0 sources</span></div><form id="data-source-form" class="stream-form"><label>Source name<input id="data-source-name" required maxlength="60" placeholder="Example: Campus IoT Gateway" /></label><label>Source type<select id="data-source-type"><option value="IoT">IoT</option><option value="API">API</option><option value="CSV">CSV</option><option value="Database">Database</option></select></label><button class="btn btn-primary small" type="submit">Add Local Source</button></form><div class="stream-list" id="data-source-list"></div></div>`);
   const defaultStreams = streamGrid ? Array.from(streamGrid.querySelectorAll('.device-card')).map((card) => card.textContent.trim()) : [];
   let streams = (() => { try { const saved = JSON.parse(localStorage.getItem('rtd-streams')); return Array.isArray(saved) && saved.length ? saved : defaultStreams; } catch { return defaultStreams; } })();
   streamGrid?.insertAdjacentHTML('afterend', `<div class="stream-management-grid"><form class="card stream-form" id="stream-editor"><h3>Data Stream Editor</h3><p class="subtle">Add or remove stream cards for the demo.</p><label>Stream name<input id="new-stream-name" required placeholder="Example: IoT Gateway" /></label><button class="btn btn-primary small" type="submit">Add Stream</button><button class="btn btn-secondary small" id="reset-streams" type="button">Reset Streams</button><div class="stream-list" id="stream-list"></div></form><div class="card metric-control-card"><h3>Live Metric Controls</h3><p class="subtle">Set a starting point for your live demo values.</p><label>Throughput baseline<input id="throughput-control" type="range" min="150" max="220" value="182" /><output id="throughput-output">182 Mbps</output></label><label>Latency baseline<input id="latency-control" type="range" min="32" max="70" value="48" /><output id="latency-output">48 ms</output></label><button class="btn btn-secondary small" id="apply-metric-controls" type="button">Apply Metrics</button></div></div>`);
-  const renderStreams = () => {
-    if (streamGrid) streamGrid.innerHTML = streams.map((name) => `<article class="card device-card">${name}</article>`).join('');
+  renderStreams = () => {
+    if (streamGrid) streamGrid.innerHTML = streams.map((name) => `<article class="card device-card"><strong>${name}</strong><small>LIVE · ${dashboardState.throughput} Mbps · ${dashboardState.latency} ms</small></article>`).join('');
     const list = document.getElementById('stream-list');
     if (list) list.innerHTML = streams.map((name, index) => `<div class="stream-row"><span>${name}</span><button type="button" data-remove-stream="${index}" aria-label="Remove ${name}">Remove</button></div>`).join('');
     localStorage.setItem('rtd-streams', JSON.stringify(streams));
   };
   renderStreams();
+  let dataSources = (() => { try { const saved = JSON.parse(localStorage.getItem('rtd-data-sources')); return Array.isArray(saved) ? saved : []; } catch { return []; } })();
+  const getLocalDataSourceCount = () => dataSources.length;
+  const renderDataSources = () => {
+    const list = document.getElementById('data-source-list');
+    const count = document.getElementById('data-source-count');
+    if (count) count.textContent = `${dataSources.length} source${dataSources.length === 1 ? '' : 's'}`;
+    if (!list) return;
+    list.textContent = '';
+    dataSources.forEach((source, index) => {
+      const row = document.createElement('div');
+      row.className = 'stream-row';
+      const label = document.createElement('span');
+      label.textContent = `${source.name} · ${source.type} · Local demo`;
+      const status = document.createElement('small');
+      status.textContent = source.status;
+      const remove = document.createElement('button');
+      remove.type = 'button';
+      remove.textContent = 'Remove';
+      remove.dataset.removeSource = String(index);
+      row.append(label, status, remove);
+      list.appendChild(row);
+    });
+    localStorage.setItem('rtd-data-sources', JSON.stringify(dataSources));
+  };
+  document.getElementById('data-source-form')?.addEventListener('submit', (event) => {
+    event.preventDefault();
+    if (!isLoggedIn || currentUser?.role !== 'Admin') return showNotification('Viewer access', 'Only an Admin can add data sources.');
+    const nameInput = document.getElementById('data-source-name');
+    const typeInput = document.getElementById('data-source-type');
+    const name = nameInput.value.trim();
+    const type = typeInput.value;
+    if (!name) return showNotification('Data source required', 'Enter a name for the local demo source.');
+    if (dataSources.some((source) => source.name.toLowerCase() === name.toLowerCase())) return showNotification('Duplicate source', 'That data source is already connected.');
+    dataSources.push({ name, type, status: 'Connected (demo)', createdAt: new Date().toISOString() });
+    nameInput.value = '';
+    renderDataSources();
+    showNotification('Data source added', `${name} is available as a local demo integration.`);
+    updateDashboardMetrics();
+  });
+  document.getElementById('data-source-list')?.addEventListener('click', (event) => {
+    const button = event.target.closest('[data-remove-source]');
+    if (!button || !isAdmin()) return;
+    dataSources.splice(Number(button.dataset.removeSource), 1);
+    renderDataSources();
+    updateDashboardMetrics();
+  });
+  renderDataSources();
   document.getElementById('stream-editor')?.addEventListener('submit', (event) => { event.preventDefault(); if (!isAdmin()) return showNotification('Viewer access', 'Only an Admin can edit streams.'); const input = document.getElementById('new-stream-name'); const value = input.value.trim(); if (!value) return; streams.push(value); input.value = ''; renderStreams(); showNotification('Stream added', `${value} is now visible.`); });
   document.getElementById('stream-list')?.addEventListener('click', (event) => { const button = event.target.closest('[data-remove-stream]'); if (!button || !isAdmin()) return; streams.splice(Number(button.dataset.removeStream), 1); renderStreams(); });
   document.getElementById('reset-streams')?.addEventListener('click', () => { if (!isAdmin()) return; streams = [...defaultStreams]; renderStreams(); });
@@ -1548,6 +1666,59 @@ document.addEventListener('DOMContentLoaded', () => {
   const renderAlertRule = () => { if (!alertStatus) return; alertStatus.textContent = alertRule ? `${alertRule.metric} alert: ${alertRule.operator} ${alertRule.threshold} (active)` : 'No custom rule saved.'; };
   document.getElementById('alert-rule-form')?.addEventListener('submit', (event) => { event.preventDefault(); if (!isAdmin()) return; alertRule = { metric: document.getElementById('alert-metric').value, operator: document.getElementById('alert-operator').value, threshold: Number(document.getElementById('alert-threshold').value), lastTriggered: 0 }; localStorage.setItem('rtd-alert-rule', JSON.stringify(alertRule)); renderAlertRule(); showNotification('Alert rule saved', 'The live dashboard will monitor this threshold.'); });
   renderAlertRule();
+  const quickActions = document.querySelectorAll('.quick-actions button');
+  const quickPanel = document.querySelector('.quick-panel');
+  const backupStatus = document.createElement('p');
+  backupStatus.className = 'subtle';
+  backupStatus.id = 'demo-backup-status';
+  quickPanel?.appendChild(backupStatus);
+  const renderBackupStatus = () => {
+    try {
+      const saved = JSON.parse(localStorage.getItem('rtd-demo-backup'));
+      backupStatus.textContent = saved?.createdAt ? `Local demo backup: ${new Date(saved.createdAt).toLocaleString()}` : 'No local demo backup created yet.';
+    } catch {
+      backupStatus.textContent = 'No local demo backup created yet.';
+    }
+  };
+  const requireSignedIn = () => {
+    if (isLoggedIn) return true;
+    showNotification('Login required', 'Sign in to use dashboard actions.');
+    openLogin();
+    return false;
+  };
+  quickActions.forEach((button) => button.addEventListener('click', () => {
+    if (!requireSignedIn()) return;
+    const action = button.textContent.trim();
+    if (action.includes('Add Data Source')) {
+      showFeature('devices');
+      window.setTimeout(() => {
+        if (typeof applyRoleAccess === 'function') applyRoleAccess();
+        if (isLoggedIn && currentUser?.role === 'Admin') document.querySelectorAll('#data-source-form input, #data-source-form select, #data-source-form button').forEach((control) => { control.disabled = false; });
+        document.getElementById('data-source-name')?.focus();
+      }, 50);
+    } else if (action.includes('Generate Report')) {
+      showFeature('reports');
+      document.querySelector('.export-btn[data-report="daily"]')?.click();
+      showNotification('Report ready', 'The existing daily demo report has been generated.');
+    } else if (action.includes('Create Alert')) {
+      showFeature('admin-dashboard');
+      window.setTimeout(() => document.getElementById('alert-metric')?.focus(), 50);
+      showNotification('Create alert', 'Use the existing alert-rule form to save a monitored rule.');
+    } else if (action.includes('Backup Now')) {
+      const createdAt = new Date().toISOString();
+      localStorage.setItem('rtd-demo-backup', JSON.stringify({ createdAt, status: 'Completed locally', sourceCount: getLocalDataSourceCount() }));
+      renderBackupStatus();
+      activityItems.unshift(`Local demo backup completed at ${new Date(createdAt).toLocaleTimeString()}`);
+      activityItems.pop();
+      renderActivity();
+      showNotification('Backup complete', 'A local demo snapshot was saved in this browser.');
+    } else if (action.includes('System Health')) {
+      updateDashboardMetrics();
+      showFeature('security');
+      showNotification('System health', `Current status: ${dashboardState.cloud}; latency ${dashboardState.latency} ms.`);
+    }
+  }));
+  renderBackupStatus();
   const existingMetricUpdate = updateDashboardMetrics;
   updateDashboardMetrics = () => { existingMetricUpdate(); if (!alertRule) return; const value = Number(dashboardState[alertRule.metric]); const triggered = alertRule.operator === 'above' ? value > alertRule.threshold : value < alertRule.threshold; if (triggered && Date.now() - alertRule.lastTriggered > 15000) { alertRule.lastTriggered = Date.now(); localStorage.setItem('rtd-alert-rule', JSON.stringify(alertRule)); notifications.unshift({ title: 'Custom alert triggered', message: `${alertRule.metric} is ${value}; rule is ${alertRule.operator} ${alertRule.threshold}.`, unread: true, category: 'System' }); notifications = notifications.slice(0, 8); renderNotificationsPanel(); showNotification('Custom alert triggered', `${alertRule.metric}: ${value}`); } };
   document.getElementById('data-import')?.addEventListener('change', (event) => { if (!isAdmin()) return; const file = event.target.files?.[0]; if (!file) return; const reader = new FileReader(); reader.onload = () => { try { const text = String(reader.result || ''); let records; if (file.name.toLowerCase().endsWith('.json')) { records = JSON.parse(text); if (!Array.isArray(records)) records = [records]; } else { const [header, ...rows] = text.trim().split(/\r?\n/); const fields = header.split(',').map((field) => field.trim()); records = rows.filter(Boolean).map((row) => Object.fromEntries(row.split(',').map((value, index) => [fields[index] || `field${index + 1}`, value.trim()]))); } if (!records.length) throw new Error('No records found'); localStorage.setItem('rtd-imported-data', JSON.stringify(records)); const sample = records[0]; ['throughput', 'latency'].forEach((key) => { if (Number.isFinite(Number(sample[key]))) dashboardState[key] = Number(sample[key]); }); updateDashboardMetrics(); document.getElementById('import-status').textContent = `Imported ${records.length} record(s). Fields: ${Object.keys(sample).join(', ')}.`; showNotification('Data imported', `${records.length} demo record(s) loaded locally.`); } catch { document.getElementById('import-status').textContent = 'Could not read this file. Use a valid CSV or JSON file.'; } }; reader.readAsText(file); });
@@ -1559,14 +1730,179 @@ document.addEventListener('DOMContentLoaded', () => {
   const mapNoteHost = document.querySelector('.map-info-card');
   mapNoteHost?.insertAdjacentHTML('beforeend', `<form class="map-note-form" id="map-note-form"><label>Location note<input id="map-note-input" placeholder="Add a presentation note" /></label><button class="btn btn-secondary small" type="submit">Save Note</button></form><p class="subtle" id="map-note-status">Select a location to add a note.</p>`);
   let selectedMapLocation = mapLocation?.textContent || 'Bengaluru'; const mapNotes = (() => { try { return JSON.parse(localStorage.getItem('rtd-map-notes')) || {}; } catch { return {}; } })();
+  const liveMapLocations = [
+    { name: 'Hyderabad', coordinates: [17.3850, 78.4867], baseStreams: 12 },
+    { name: 'Vijayawada', coordinates: [16.5062, 80.6480], baseStreams: 8 },
+    { name: 'Bengaluru', coordinates: [12.9716, 77.5946], baseStreams: 16 },
+    { name: 'Chennai', coordinates: [13.0827, 80.2707], baseStreams: 13 },
+    { name: 'Mumbai', coordinates: [19.0760, 72.8777], baseStreams: 18 },
+    { name: 'Delhi', coordinates: [28.6139, 77.2090], baseStreams: 20 },
+    { name: 'Pune', coordinates: [18.5204, 73.8567], baseStreams: 10 },
+    { name: 'Visakhapatnam', coordinates: [17.6868, 83.2185], baseStreams: 9 }
+  ];
+  let liveMap;
+  let liveMapMarkers = new Map();
+  let searchedMapMarker;
+  const mapSearchForm = document.getElementById('map-search-form');
+  const mapSearchInput = document.getElementById('map-search-input');
+  const mapSearchButton = document.getElementById('map-search-button');
+  const mapSearchClear = document.getElementById('map-search-clear');
+  const mapSearchStatus = document.getElementById('map-search-status');
+  const escapeMapText = (value) => String(value || '').replace(/[&<>'"]/g, (character) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[character]));
+  const getLiveMapMetrics = () => {
+    const throughput = Number(dashboardState.throughput) || 182;
+    const latency = Number(dashboardState.latency) || 48;
+    const sync = Number(dashboardState.sync) || 98;
+    return { throughput, latency, sync };
+  };
+  const getLiveMapLocationMetrics = (location) => {
+    const { throughput, latency, sync } = getLiveMapMetrics();
+    const variation = location.name.length % 5 - 2;
+    const streams = Math.max(4, location.baseStreams + Math.round((throughput - 182) / 18) + variation);
+    const performance = Math.max(72, Math.min(99, Math.round(sync - latency * 0.08 + variation)));
+    const status = latency > 58 ? 'Watch' : 'Active';
+    return { streams, performance, status };
+  };
+  const updateLiveMapInfo = (location) => {
+    const metrics = getLiveMapLocationMetrics(location);
+    if (mapLocation) mapLocation.textContent = location.name;
+    if (mapInfo) mapInfo.textContent = 'Sample project location • metrics derived from the current demo platform state.';
+    if (mapStreams) mapStreams.textContent = metrics.streams;
+    if (mapStatus) mapStatus.textContent = metrics.status;
+    if (mapPerformance) mapPerformance.textContent = `${metrics.performance}%`;
+    if (mapUpdated) mapUpdated.textContent = `Demo metrics updated ${new Date().toLocaleTimeString()} • no external sensor feed connected.`;
+  };
+  const renderLiveMapMarkers = () => {
+    if (!liveMap || !window.L) return;
+    liveMapLocations.forEach((location) => {
+      const metrics = getLiveMapLocationMetrics(location);
+      const popup = `<div class="map-popup-title">${location.name}</div><div>Data Streams: ${metrics.streams}</div><div>Status: ${metrics.status}</div><div>Performance: ${metrics.performance}%</div><div class="map-popup-note">Sample/demo project data</div>`;
+      let marker = liveMapMarkers.get(location.name);
+      if (!marker) {
+        marker = window.L.marker(location.coordinates).addTo(liveMap).on('click', () => {
+          selectedMapLocation = location.name;
+          updateLiveMapInfo(location);
+          refreshMapNote();
+        });
+        liveMapMarkers.set(location.name, marker);
+      }
+      marker.bindPopup(popup);
+    });
+    const selected = liveMapLocations.find((location) => location.name === selectedMapLocation) || liveMapLocations[2];
+    updateLiveMapInfo(selected);
+  };
+  const setMapSearchStatus = (message, isError = false) => {
+    if (!mapSearchStatus) return;
+    mapSearchStatus.textContent = message;
+    mapSearchStatus.classList.toggle('error', isError);
+  };
+  const searchMapLocation = async () => {
+    const query = mapSearchInput?.value.trim();
+    if (!query || !liveMap) return setMapSearchStatus('Enter a city, country, or location to search.', true);
+    mapSearchButton.disabled = true;
+    mapSearchButton.textContent = 'Searching...';
+    setMapSearchStatus('Searching OpenStreetMap...');
+    try {
+      const response = await fetch(`https://nominatim.openstreetmap.org/search?format=jsonv2&limit=1&accept-language=en&q=${encodeURIComponent(query)}`, {
+        headers: { Accept: 'application/json' }
+      });
+      if (!response.ok) throw new Error('Search service unavailable');
+      const results = await response.json();
+      const result = results[0];
+      if (!result) {
+        setMapSearchStatus('Location not found. Try a more specific name.', true);
+        return;
+      }
+      const latitude = Number(result.lat);
+      const longitude = Number(result.lon);
+      liveMap.setView([latitude, longitude], 12, { animate: true });
+      if (searchedMapMarker) liveMap.removeLayer(searchedMapMarker);
+      searchedMapMarker = window.L.marker([latitude, longitude]).addTo(liveMap);
+      searchedMapMarker.bindPopup(`<div class="map-popup-title">${escapeMapText(result.display_name)}</div><div class="map-popup-note">Search result • location data from OpenStreetMap</div>`).openPopup();
+      if (mapLocation) mapLocation.textContent = result.display_name.split(',')[0];
+      if (mapInfo) mapInfo.textContent = 'Searched location • no project sensor feed is associated with this result.';
+      setMapSearchStatus(`Showing ${result.display_name}`);
+    } catch {
+      setMapSearchStatus('Search could not be completed. Check your connection and try again.', true);
+    } finally {
+      mapSearchButton.disabled = false;
+      mapSearchButton.textContent = 'Search';
+    }
+  };
+  const resetLiveMap = () => {
+    if (!liveMap) return;
+    liveMap.setView([20.5937, 78.9629], 5, { animate: true });
+    if (searchedMapMarker) {
+      liveMap.removeLayer(searchedMapMarker);
+      searchedMapMarker = null;
+    }
+    if (mapSearchInput) mapSearchInput.value = '';
+    setMapSearchStatus('Showing the project demo locations across India.');
+    renderLiveMapMarkers();
+  };
+  const addLiveMapControls = () => {
+    if (!liveMap || !window.L || liveMap.getContainer().querySelector('.live-map-controls')) return;
+    const control = window.L.control({ position: 'topright' });
+    control.onAdd = () => {
+      const container = window.L.DomUtil.create('div', 'leaflet-control live-map-controls');
+      const addButton = (label, title, handler) => {
+        const button = window.L.DomUtil.create('button', 'live-map-control-button', container);
+        button.type = 'button';
+        button.textContent = label;
+        button.title = title;
+        button.setAttribute('aria-label', title);
+        window.L.DomEvent.on(button, 'click', window.L.DomEvent.stopPropagation);
+        window.L.DomEvent.on(button, 'click', handler);
+      };
+      addButton('⌂', 'Reset map view', resetLiveMap);
+      addButton('⛶', 'Toggle fullscreen map', () => {
+        const card = document.querySelector('.map-card');
+        if (!document.fullscreenElement) card?.requestFullscreen?.();
+        else document.exitFullscreen?.();
+        window.setTimeout(() => liveMap.invalidateSize(), 250);
+      });
+      addButton('📍', 'Use my location', () => {
+        if (!navigator.geolocation) return setMapSearchStatus('Geolocation is not supported by this browser.', true);
+        setMapSearchStatus('Requesting your location...');
+        navigator.geolocation.getCurrentPosition((position) => {
+          const point = [position.coords.latitude, position.coords.longitude];
+          liveMap.setView(point, 13, { animate: true });
+          if (searchedMapMarker) liveMap.removeLayer(searchedMapMarker);
+          searchedMapMarker = window.L.marker(point).addTo(liveMap).bindPopup('<div class="map-popup-title">Your selected location</div><div class="map-popup-note">Shown only after your explicit permission.</div>').openPopup();
+          setMapSearchStatus('Showing your selected location.');
+        }, () => setMapSearchStatus('Location permission was unavailable or denied.', true));
+      });
+      return container;
+    };
+    control.addTo(liveMap);
+  };
+  const initializeLiveMap = () => {
+    const mapElement = document.getElementById('live-map');
+    if (!mapElement || !window.L) return;
+    if (!liveMap) {
+      liveMap = window.L.map(mapElement, { zoomControl: true, worldCopyJump: true, worldCopyBounds: false, maxBoundsViscosity: 0 }).setView([20.5937, 78.9629], 5);
+      window.liveMapInstance = liveMap;
+      window.L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; OpenStreetMap contributors'
+      }).addTo(liveMap);
+    }
+    liveMap.invalidateSize();
+    addLiveMapControls();
+    renderLiveMapMarkers();
+  };
+  window.refreshLiveMap = initializeLiveMap;
+  initializeLiveMap();
+  mapSearchForm?.addEventListener('submit', (event) => { event.preventDefault(); searchMapLocation(); });
+  mapSearchClear?.addEventListener('click', () => { if (mapSearchInput) mapSearchInput.value = ''; setMapSearchStatus(''); mapSearchInput?.focus(); });
   const refreshMapNote = () => { const input = document.getElementById('map-note-input'); const status = document.getElementById('map-note-status'); if (input) input.value = mapNotes[selectedMapLocation] || ''; if (status) status.textContent = mapNotes[selectedMapLocation] ? `Saved note for ${selectedMapLocation}: ${mapNotes[selectedMapLocation]}` : `No note saved for ${selectedMapLocation}.`; };
-  mapMarkers.forEach((marker) => marker.addEventListener('click', () => { selectedMapLocation = marker.dataset.location; setTimeout(refreshMapNote, 0); }));
+  liveMapLocations.forEach((location) => { if (location.name === selectedMapLocation) updateLiveMapInfo(location); });
   document.getElementById('map-note-form')?.addEventListener('submit', (event) => { event.preventDefault(); if (!isAdmin()) return showNotification('Viewer access', 'Only an Admin can save map notes.'); mapNotes[selectedMapLocation] = document.getElementById('map-note-input').value.trim(); localStorage.setItem('rtd-map-notes', JSON.stringify(mapNotes)); refreshMapNote(); }); refreshMapNote();
 
   if (!document.getElementById('presentation-mode')) document.querySelector('.hero-actions')?.insertAdjacentHTML('beforeend', '<button class="btn btn-secondary" id="presentation-mode" type="button">Start Demo Tour</button>');
   if (!document.getElementById('report-preview')) reportSummary?.insertAdjacentHTML('beforebegin', '<button class="btn btn-secondary" id="report-preview" type="button">Open Report Preview</button>');
-  const reportModal = document.createElement('div'); reportModal.className = 'report-preview-backdrop'; reportModal.innerHTML = `<article class="card report-preview"><div class="report-preview-header"><div><p class="eyebrow">Report Preview</p><h2>Real-Time Data & Modern Tech</h2></div><button class="modal-close" type="button" aria-label="Close report preview">×</button></div><p id="report-preview-meta"></p><div class="report-preview-metrics" id="report-preview-metrics"></div><h3>Executive Summary</h3><p id="report-preview-summary">Platform health is stable with live frontend demo analytics.</p><div class="hero-actions report-preview-actions"><button class="btn btn-primary" id="print-report" type="button">Print / Save PDF</button><button class="btn btn-secondary" id="close-report" type="button">Close</button></div></article>`; body.appendChild(reportModal);
-  const openReport = () => { document.getElementById('report-preview-meta').textContent = `Prepared ${new Date().toLocaleString()} • ${isLoggedIn ? profile.name : 'Guest'} • ${currentRole}`; document.getElementById('report-preview-metrics').innerHTML = `<div><span>Throughput</span><strong>${dashboardState.throughput} Mbps</strong></div><div><span>Latency</span><strong>${dashboardState.latency} ms</strong></div><div><span>Uptime</span><strong>${dashboardState.uptime}%</strong></div>`; reportModal.classList.add('open'); };
+  const reportModal = document.createElement('div'); reportModal.className = 'report-preview-backdrop'; reportModal.innerHTML = `<article class="card report-preview"><div class="report-preview-header"><div><p class="eyebrow">Report Preview</p><h2>Real-Time Data & Modern Tech</h2></div><button class="modal-close" type="button" aria-label="Close report preview">Ã—</button></div><p id="report-preview-meta"></p><div class="report-preview-metrics" id="report-preview-metrics"></div><h3>Executive Summary</h3><p id="report-preview-summary">Platform health is stable with live frontend demo analytics.</p><div class="hero-actions report-preview-actions"><button class="btn btn-primary" id="print-report" type="button">Print / Save PDF</button><button class="btn btn-secondary" id="close-report" type="button">Close</button></div></article>`; body.appendChild(reportModal);
+  const openReport = () => { document.getElementById('report-preview-meta').textContent = `Prepared ${new Date().toLocaleString()} â€¢ ${isLoggedIn ? profile.name : 'Guest'} â€¢ ${currentRole}`; document.getElementById('report-preview-metrics').innerHTML = `<div><span>Throughput</span><strong>${dashboardState.throughput} Mbps</strong></div><div><span>Latency</span><strong>${dashboardState.latency} ms</strong></div><div><span>Uptime</span><strong>${dashboardState.uptime}%</strong></div>`; reportModal.classList.add('open'); };
   document.getElementById('report-preview')?.addEventListener('click', openReport); document.getElementById('close-report')?.addEventListener('click', () => reportModal.classList.remove('open')); reportModal.querySelector('.modal-close').addEventListener('click', () => reportModal.classList.remove('open')); document.getElementById('print-report')?.addEventListener('click', () => window.print());
 
   const mobileNav = document.createElement('nav'); mobileNav.className = 'mobile-bottom-nav'; mobileNav.setAttribute('aria-label', 'Mobile navigation'); mobileNav.innerHTML = '<a href="#home">Home</a><a href="#dashboard">Dashboard</a><a href="#analytics">Analytics</a><a href="#admin-dashboard">Admin</a><a href="#technology-stack">More</a>'; body.appendChild(mobileNav);
@@ -1704,6 +2040,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if (token) headers.Authorization = `Bearer ${token}`;
     const response = await fetch(url, { ...options, headers });
     const data = await response.json().catch(() => ({}));
+    if (url === '/api/ai/chat') {
+      console.info('Gemini API request', { path: url, status: response.status, ok: response.ok });
+    }
     if (!response.ok) throw new Error(data.error || `Request failed (${response.status})`);
     return data;
   };
@@ -1751,8 +2090,8 @@ document.addEventListener('DOMContentLoaded', () => {
       const section = document.getElementById(id);
       if (!section) return;
       section.classList.add('feature-page-section');
-      // Keep the reference-style Dashboard intact; all other top-level features get dedicated pages.
-      if (id === 'dashboard') return;
+      // Keep the existing Dashboard and Analytics implementations intact.
+      if (id === 'dashboard' || id === 'analytics') return;
       section.querySelectorAll('.feature-workspace').forEach((node) => node.remove());
 
       const panel = document.createElement('div');
@@ -1785,6 +2124,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // Turn the old section markup into a clean, dedicated feature page.
       Array.from(section.children).forEach((child) => {
+        if (id === 'devices' && child.classList.contains('data-source-panel')) {
+          child.hidden = false;
+          child.removeAttribute('aria-hidden');
+          return;
+        }
         child.hidden = true;
         child.setAttribute('aria-hidden', 'true');
       });
@@ -1802,6 +2146,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function updateFeatureDataFromMetrics(data) {
     const replacements = {
+      'devices:Active Streams': `${Math.max(1, Math.round(data.users / 7.7) + getLocalDataSourceCount())}`,
       'devices:Records/min': `${Math.round(data.network * 57)} rec/min`,
       'devices:Avg Latency': `${Math.round(data.latency)} ms`,
       'devices:Health': `${Math.max(98, Number(data.uptime) - .2).toFixed(1)}%`,
@@ -1842,13 +2187,15 @@ document.addEventListener('DOMContentLoaded', () => {
     set('sensor-light', `${Math.round(data.signal)}%`);
     set('sensor-energy', `${Number(data.speed).toFixed(1)}x`);
     set('sensor-device-status', data.cloud);
-    set('weather-temp', `${Math.round(data.weatherTemp)}°C`);
+    set('weather-temp', `${Math.round(data.weatherTemp)}Â°C`);
     set('weather-condition', data.weatherCondition);
     set('weather-humidity', `${Math.round(data.weatherHumidity)}%`);
     set('weather-wind', `${Math.round(data.weatherWind)} km/h`);
     set('weather-pressure', `${Math.round(data.weatherPressure)} hPa`);
     renderFeatureData();
+    if (typeof applyRoleAccess === 'function') applyRoleAccess();
     updateFeatureDataFromMetrics(data);
+    if (typeof renderLiveMapMarkers === 'function') renderLiveMapMarkers();
   };
 
   const applyServerUser = (user) => {
@@ -1879,7 +2226,7 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
     try {
-      status.textContent = 'Connecting to server…';
+      status.textContent = 'Connecting to serverâ€¦';
       status.classList.remove('error');
       const result = await apiFetch('/api/auth/login', {
         method: 'POST',
@@ -1923,7 +2270,7 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
     try {
-      status.textContent = 'Creating secure account…';
+      status.textContent = 'Creating secure accountâ€¦';
       status.classList.remove('error');
       const result = await apiFetch('/api/auth/register', {
         method: 'POST',
@@ -1960,7 +2307,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const button = contactForm.querySelector('button[type="submit"]');
       if (button) {
         const original = button.textContent;
-        button.textContent = 'Message sent ✓';
+        button.textContent = 'Message sent âœ“';
         window.setTimeout(() => { button.textContent = original; }, 1800);
       }
       backendContactForm.reset();
