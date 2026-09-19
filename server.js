@@ -926,22 +926,11 @@ ${message}`;
 
       let response;
 
-      try {
-        response = await generateGeminiResponse('gemini-3.6-flash');
-      } catch (error) {
-        const status = Number(error?.status ?? error?.code);
-        const details = String(error?.message || '').toLowerCase();
-        const retryable =
-          status === 503 ||
-          details.includes('503') ||
-          details.includes('unavailable') ||
-          details.includes('high demand');
-
-        if (!retryable) throw error;
-
-        response = await generateGeminiResponse('gemini-2.5-flash');
-      }
-
+try {
+  response = await generateGeminiResponse('gemini-3.6-flash');
+} catch (error) {
+  throw error;
+}
       return send(res, 200, {
         reply:
           response.text ||
